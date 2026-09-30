@@ -53,3 +53,65 @@ String obtenerIP() {
     return WiFi.localIP().toString();
 }
 ````
+
+Y se puede ver en la siguiente imagen como se ha desarrollado el código para mostrar las redes disponibles y el resultado obtenido.
+```` wifi.cpp
+int escanearWiFi() {
+    WiFi.mode(WIFI_STA);
+
+    Serial.println("\nEscaneando redes WiFi...");
+
+    // Escaneo síncrono: espera hasta que termina.
+    const int numeroRedes = WiFi.scanNetworks();
+
+    if (numeroRedes < 0) {
+        Serial.println("Error al escanear las redes.");
+    } else if (numeroRedes == 0) {
+        Serial.println("No se encontraron redes.");
+    } else {
+        Serial.printf("Redes encontradas: %d\n", numeroRedes);
+        Serial.println("N | SSID | RSSI (dBm) | Canal | Seguridad");
+
+        for (int i = 0; i < numeroRedes; i++) {
+            Serial.printf(
+                "%d | %s | %d | %d | %s\n",
+                i + 1,
+                WiFi.SSID(i).c_str(),
+                WiFi.RSSI(i),
+                WiFi.channel(i),
+                WiFi.encryptionType(i) == WIFI_AUTH_OPEN
+                    ? "Abierta"
+                    : "Protegida"
+            );
+        }
+    }
+
+    // Libera la memoria ocupada por los resultados del escaneo.
+    WiFi.scanDelete();
+
+    return numeroRedes;
+}
+````
+
+### Ping a google.com
+Uno de los objetivos era comprobar la correcta conexión a internet mediante un ping a google. Se ha desarrollado  la siguiente función que se llama de forma periódica:
+```` ping.cpp
+#include <Arduino.h>
+#include <ESPping.h>
+
+bool ping_Google(){
+    
+    Serial.println("Haciendo ping a www.google.com...");
+
+    if (Ping.ping("www.google.com", 4)) {
+        Serial.print("Ping correcto. Tiempo medio: ");
+        Serial.print(Ping.averageTime());
+        Serial.println(" ms");
+        return true;
+    } else {
+        Serial.println("Ping fallido.");
+        return false;
+    }
+}
+````
+
