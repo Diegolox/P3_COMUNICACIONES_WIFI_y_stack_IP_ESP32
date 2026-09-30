@@ -1,62 +1,96 @@
 #include "hal/wifi.h"
 #include <WiFi.h>
 
-static const char* SSID = "telekino";
-static const char* PASSWORD = "LeonardoTQ1852";
-
-// Inicializa el puerto serie, muestra la MAC e intenta conectarse al WiFi.
-void init_Wifi() {
+bool init_wifi() {
     Serial.begin(115200);
     delay(1000);
 
-    Serial.print("MAC del ESP32: ");
-    Serial.println(obtenerMAC()); // OBTIENE LA MAC DEL ESP32
+    // STA: el ESP32 se conecta a un punto de acceso.
+    WiFi.mode(WIFI_STA);
 
-    Serial.print("Conectando a ");
-    Serial.println(SSID);
+    // Primero escanea y después intenta conectar al AP configurado.
+    escanearWiFi();
 
-    if (conectarWiFi(SSID, PASSWORD)) { // SI SE CONECTA AL WIFI CON UN SSID Y CONTRASEÑA
-        Serial.println("WiFi conectado"); 
-        Serial.print("IP del ESP32: ");
-        Serial.println(obtenerIP()); // OBTIENE LA IP DEL ESP32
-    } else {
-        Serial.println("No se pudo conectar al WiFi");
+    if (!conectarWiFi(SSID, PASSWORD)) {
+        Serial.println("No se pudo conectar al AP.");
+        return false;
     }
+
+    Serial.println("WiFi conectado.");
+    Serial.print("IP del ESP32: ");
+    Serial.println(obtenerIP());
+
+    return true;
 }
 
-// Inicia la conexión y espera hasta conectarse o agotar el tiempo máximo.
+int escanearWiFi() {
+    WiFi.mode(WIFI_STA);
+
+    Serial.println("\nEscaneando redes WiFi...");
+
+    // Escaneo síncrono: espera hasta que termina.
+    const int numeroRedes = WiFi.scanNetworks();
+
+    if (numeroRedes < 0) {
+        Serial.println("Error al escanear las redes.");
+    } else if (numeroRedes == 0) {
+        Serial.println("No se encontraron redes.");
+    } else {
+        Serial.printf("Redes encontradas: %d\n", numeroRedes);
+        Serial.println("N | SSID | RSSI (dBm) | Canal | Seguridad");
+
+        for (int i = 0; i < numeroRedes; i++) {
+            Serial.printf(
+                "%d | %s | %d | %d | %s\n",
+                i + 1,
+                WiFi.SSID(i).c_str(),
+                WiFi.RSSI(i),
+                WiFi.channel(i),
+                WiFi.encryptionType(i) == WIFI_AUTH_OPEN
+                    ? "Abierta"
+                    : "Protegida"
+            );
+        }
+    }
+
+    // Libera la memoria ocupada por los resultados del escaneo.
+    WiFi.scanDelete();
+
+    return numeroRedes;
+}
+
 bool conectarWiFi(const char* ssid, const char* password,
                   unsigned long timeoutMs) {
     WiFi.mode(WIFI_STA);
+
+    Serial.print("\nConectando a ");
+    Serial.println(ssid);
+
     WiFi.begin(ssid, password);
 
     const unsigned long inicio = millis();
 
+    // La resta permite gestionar el desbordamiento de millis().
     while (WiFi.status() != WL_CONNECTED &&
            millis() - inicio < timeoutMs) {
-        delay(500);
+        delay(250);
         Serial.print(".");
     }
 
     Serial.println();
-    return WiFi.status() == WL_CONNECTED;
+
+    if (WiFi.status() != WL_CONNECTED) {
+        // Cancela el intento al alcanzar el tiempo máximo.
+        WiFi.disconnect();
+        return false;
+    }
+
+    return true;
 }
 
-// Comprueba el estado actual de la conexión.
-bool wifiConectado() {
-    return WiFi.status() == WL_CONNECTED;
-}
-
-// Activa el modo cliente y consulta su MAC; no necesita conexión.
-String obtenerMAC() {
-    WiFi.mode(WIFI_STA);
-    return WiFi.macAddress();
-}
-
-// Consulta la IP que ha recibido el ESP32 al conectarse.
 String obtenerIP() {
-    if (!wifiConectado()) {
-        return "";
+    if (WiFi.status() != WL_CONNECTED) {
+        return "0.0.0.0";
     }
 
     return WiFi.localIP().toString();

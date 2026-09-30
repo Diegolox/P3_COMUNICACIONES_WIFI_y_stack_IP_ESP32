@@ -1,19 +1,28 @@
 #pragma once
+
 #include <Arduino.h>
 
-// Inicializa el puerto serie, muestra la MAC y conecta el ESP32 al WiFi.
-void init_Wifi();
+// Credenciales del punto de acceso.
+constexpr const char* SSID = "DIGIFIBRA-PLUS-6CC1";
+constexpr const char* PASSWORD = "388UYUD7G8";
 
-// Conecta el ESP32 a la red indicada.
-// Devuelve true si se conecta antes de que transcurra timeoutMs.
+/* Configura el modo STA, escanea las redes y después se conecta.
+ * Devuelve true si la conexión se establece correctamente.
+ */
+bool init_wifi();
+
+/* Escanea y muestra las redes por Serial.
+ * Devuelve el número de redes encontradas, o un valor negativo si falla.
+ */
+int escanearWiFi();
+
+/* Conecta al AP y espera hasta conectarse o agotar el tiempo máximo.
+ * Para una red abierta, utiliza "" como contraseña.
+ */
 bool conectarWiFi(const char* ssid, const char* password,
                   unsigned long timeoutMs = 15000);
 
-// Devuelve true si el ESP32 está conectado al WiFi.
-bool wifiConectado();
-
-// Devuelve la dirección MAC de la interfaz WiFi del ESP32.
-String obtenerMAC();
-
-// Devuelve la IP local del ESP32, o una cadena vacía si no está conectado.
+/* Devuelve la IP del ESP32 como texto.
+ * Si no está conectado, devuelve "0.0.0.0".
+ */
 String obtenerIP();

@@ -2,7 +2,7 @@
 #include "hal/wifi.h"
 
 void setup() {
-    init_Wifi();
+    init_wifi();
 }
 
 void loop() {
