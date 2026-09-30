@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 // Credenciales del punto de acceso.
-constexpr const char* SSID = "DIGIFIBRA-PLUS-6CC1";
+constexpr const char* SSID = "DIGIFIBRA-6CC1";
 constexpr const char* PASSWORD = "388UYUD7G8";
 
 /* Configura el modo STA, escanea las redes y después se conecta.
