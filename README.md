@@ -21,17 +21,21 @@ Esta práctica aborda la conexión del ESP32 a una red WiFi y los fundamentos de
 | **Puertos y sockets** | Los puertos identifican servicios o aplicaciones dentro de un dispositivo. Los sockets permiten a los programas enviar y recibir datos a través de la red. |
 | **Cliente y servidor** | El cliente inicia una comunicación o solicita un servicio; el servidor escucha y atiende las solicitudes. Estos roles son independientes de los modos WiFi STA y AP. |
 
-### Aplicación en el código
+### CONEXIÓN WIFI
+#### OBTENCIÓN DE LA MAC E IP
+````
+// Activa el modo cliente y consulta su MAC; no necesita conexión.
+String obtenerMAC() {
+    WiFi.mode(WIFI_STA);
+    return WiFi.macAddress();
+}
 
-La conexión se gestiona mediante la biblioteca `WiFi.h`:
+// Consulta la IP que ha recibido el ESP32 al conectarse.
+String obtenerIP() {
+    if (!wifiConectado()) {
+        return "";
+    }
 
-| Función o expresión | Utilidad |
-|---|---|
-| `WiFi.mode(WIFI_STA)` | Configura el ESP32 como estación WiFi. |
-| `WiFi.macAddress()` | Obtiene la dirección MAC de la interfaz de estación. |
-| `WiFi.begin(ssid, password)` | Inicia la conexión con la red indicada. |
-| `WiFi.status() == WL_CONNECTED` | Comprueba si la conexión WiFi está establecida. |
-| `WiFi.localIP()` | Obtiene la dirección IP local del ESP32. |
-| `millis()` | Permite limitar el tiempo de espera de conexión para evitar una espera indefinida. |
-
-El monitor serie, configurado a **115200 baudios**, muestra la MAC, el resultado de la conexión y la IP obtenida.
+    return WiFi.localIP().toString();
+}
+````
