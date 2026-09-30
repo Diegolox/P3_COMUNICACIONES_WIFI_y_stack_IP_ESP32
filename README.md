@@ -6,6 +6,7 @@ Esta práctica aborda la conexión del ESP32 a una red WiFi y los fundamentos de
 ## Conexión Wi-Fi
 ### Obtención de la IP del ESP32 y escaneo de redes disponibles
 Primeramente se ha realizado un codigo sencillo con la estructura de capas de los repositorios anteriores. En este caso el objetivo es configurar el ESP32 como STA y conectarlo a una wifi con un determinado SSID. Además realiza un escaneo de las redes disponibles y entre otros parámetros indica si están protegidas o no, la intensidad con la que llega la señal o el nombre del punto de acceso. 
+
 Se puede ver el código completo en `P3_1_IDENTIFICAR_IP`, pero en el siguiente fragmento se muestran las funciones diseñadas para conectarse a la red Wi-Fi y para obtener la IP del ESP32.
 
 ```` wifi.cpp
