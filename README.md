@@ -4,18 +4,40 @@ Esta práctica aborda la conexión del ESP32 a una red WiFi y los fundamentos de
 
 
 ## Conexión Wi-Fi
-### Obtención de la MAC e IP
+### Obtención de la IP del ESP32 y escaneo de redes disponibles
 ```` wifi.cpp
-// Activa el modo cliente y consulta su MAC; no necesita conexión.
-String obtenerMAC() {
+bool conectarWiFi(const char* ssid, const char* password,
+                  unsigned long timeoutMs) {
     WiFi.mode(WIFI_STA);
-    return WiFi.macAddress();
+
+    Serial.print("\nConectando a ");
+    Serial.println(ssid);
+
+    WiFi.begin(ssid, password);
+
+    const unsigned long inicio = millis();
+
+    // La resta permite gestionar el desbordamiento de millis().
+    while (WiFi.status() != WL_CONNECTED &&
+           millis() - inicio < timeoutMs) {
+        delay(250);
+        Serial.print(".");
+    }
+
+    Serial.println();
+
+    if (WiFi.status() != WL_CONNECTED) {
+        // Cancela el intento al alcanzar el tiempo máximo.
+        WiFi.disconnect();
+        return false;
+    }
+
+    return true;
 }
 
-// Consulta la IP que ha recibido el ESP32 al conectarse.
 String obtenerIP() {
-    if (!wifiConectado()) {
-        return "";
+    if (WiFi.status() != WL_CONNECTED) {
+        return "0.0.0.0";
     }
 
     return WiFi.localIP().toString();
