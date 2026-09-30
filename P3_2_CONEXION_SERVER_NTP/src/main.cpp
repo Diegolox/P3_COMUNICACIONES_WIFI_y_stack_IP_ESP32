@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include "hal/wifi.h"
-#include "network/ping.h"
+#include "network/NTP.h"
 
 void setup() {
     init_wifi();
 }
 
 void loop() {
-    ping_Google();
+    mostrarHoraMadrid();
     delay(1000);
 }
