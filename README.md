@@ -92,6 +92,43 @@ int escanearWiFi() {
     return numeroRedes;
 }
 ````
+```text
+21:28:36.921 > Escaneando redes WiFi...
+21:28:44.329 > Redes encontradas: 31
+21:28:44.329 > N | SSID | RSSI (dBm) | Canal | Seguridad
+21:28:44.344 > 1 | DIGIFIBRA-6CC1 | -68 | 4 | Protegida
+21:28:44.348 > 2 | MOVISTAR-WIFI6-B3D0 | -75 | 1 | Protegida
+21:28:44.351 > 3 | MOVISTAR-WIFI6-2EC0 | -77 | 6 | Protegida
+21:28:44.356 > 4 | MOVISTAR_F9CD | -78 | 1 | Protegida
+21:28:44.359 > 5 | MIWIFI_Dtvm | -79 | 11 | Protegida
+21:28:44.364 > 6 | MOVISTAR-WIFI6-8858 | -80 | 1 | Protegida
+21:28:44.367 > 7 | MOVISTAR-WIFI6-B878 | -81 | 8 | Protegida
+21:28:44.370 > 8 | MiFibra-C086 | -82 | 1 | Protegida
+21:28:44.372 > 9 | MOVISTAR_C6F0_Domotica | -82 | 2 | Protegida
+21:28:44.377 > 10 | DIGI-6CC1_EXT | -82 | 4 | Protegida
+21:28:44.383 > 11 | DIGIFIBRA-GkKK | -83 | 9 | Protegida
+21:28:44.385 > 12 | MOVISTAR_C820 | -84 | 1 | Protegida
+21:28:44.387 > 13 | HUAWEI-104N6B | -85 | 6 | Protegida
+21:28:44.392 > 14 | DIGI-u4uY | -85 | 10 | Protegida
+21:28:44.395 > 15 | DIGIFIBRA-95PH | -86 | 1 | Protegida
+21:28:44.399 > 16 | MOVISTAR_C6F0 | -86 | 2 | Protegida
+21:28:44.403 > 17 | HUAWEI-104N6B_Wi-Fi5 | -86 | 6 | Protegida
+21:28:44.406 > 18 | MIWIFI_KPfG-2G | -87 | 6 | Protegida
+21:28:44.410 > 19 | MOVISTAR-WIFI6-3468 | -87 | 6 | Protegida
+21:28:44.414 > 20 | MOVISTAR_4E8F | -87 | 11 | Protegida
+21:28:44.418 > 21 | DIGIFIBRA-9xPc | -88 | 3 | Protegida
+21:28:44.422 > 22 | MIWIFI_4Fpy | -88 | 6 | Protegida
+21:28:44.422 > 23 | MOVISTAR-WIFI6-0DB0 | -88 | 6 | Protegida
+21:28:44.430 > 24 | MOVISTAR-WIFI6-B0F8 | -89 | 6 | Protegida
+21:28:44.433 > 25 | DIRECT-94-HP ENVY 5000 series | -89 | 6 | Protegida
+21:28:44.438 > 26 | MOVISTAR_0FC8 | -89 | 11 | Protegida
+21:28:44.439 > 27 | Livebox7-381F-WiFi7 | -90 | 11 | Protegida
+21:28:44.446 > 28 | Livebox7-381F | -90 | 11 | Protegida
+21:28:44.450 > 29 | MOVISTAR_B3D0 | -91 | 1 | Protegida
+21:28:44.453 > 30 | MOVISTAR_C6F0_Domotica | -93 | 2 | Protegida
+21:28:44.454 > 31 | DIGIFIBRA-xuM4 | -94 | 10 | Protegida
+21:28:44.462 > 
+```
 
 ### Ping a google.com
 Uno de los objetivos era comprobar la correcta conexión a internet mediante un ping a google. Se ha desarrollado  la siguiente función que se llama de forma periódica:
