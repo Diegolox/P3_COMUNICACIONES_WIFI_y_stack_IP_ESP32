@@ -4,21 +4,21 @@
 static const char* SSID = "telekino";
 static const char* PASSWORD = "LeonardoTQ1852";
 
-// Inicializa el puerto serie, muestra la MAC e intenta conectar al WiFi.
+// Inicializa el puerto serie, muestra la MAC e intenta conectarse al WiFi.
 void init_Wifi() {
     Serial.begin(115200);
     delay(1000);
 
     Serial.print("MAC del ESP32: ");
-    Serial.println(obtenerMAC());
+    Serial.println(obtenerMAC()); // OBTIENE LA MAC DEL ESP32
 
     Serial.print("Conectando a ");
     Serial.println(SSID);
 
-    if (conectarWiFi(SSID, PASSWORD)) {
-        Serial.println("WiFi conectado");
+    if (conectarWiFi(SSID, PASSWORD)) { // SI SE CONECTA AL WIFI CON UN SSID Y CONTRASEÑA
+        Serial.println("WiFi conectado"); 
         Serial.print("IP del ESP32: ");
-        Serial.println(obtenerIP());
+        Serial.println(obtenerIP()); // OBTIENE LA IP DEL ESP32
     } else {
         Serial.println("No se pudo conectar al WiFi");
     }
