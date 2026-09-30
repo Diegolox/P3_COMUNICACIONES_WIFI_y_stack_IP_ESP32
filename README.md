@@ -151,4 +151,10 @@ bool ping_Google(){
     }
 }
 ````
+### Conexión a servidor NTP
 
+```NTP.cpp
+
+
+
+```
