@@ -5,7 +5,7 @@ Esta práctica aborda la conexión del ESP32 a una red WiFi y los fundamentos de
 
 ## CONEXIÓN WIFI
 ### OBTENCIÓN DE LA MAC E IP
-````
+```` wifi.cpp
 // Activa el modo cliente y consulta su MAC; no necesita conexión.
 String obtenerMAC() {
     WiFi.mode(WIFI_STA);
