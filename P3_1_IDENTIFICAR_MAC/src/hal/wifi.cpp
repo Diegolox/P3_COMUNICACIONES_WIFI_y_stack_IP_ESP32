@@ -1,8 +1,8 @@
 #include "hal/wifi.h"
 #include <WiFi.h>
 
-static const char* SSID = "NOMBRE_WIFI_TALLER";
-static const char* PASSWORD = "CONTRASENA_WIFI_TALLER";
+static const char* SSID = "telekino";
+static const char* PASSWORD = "LeonardoTQ1852";
 
 // Inicializa el puerto serie, muestra la MAC e intenta conectar al WiFi.
 void init_Wifi() {
