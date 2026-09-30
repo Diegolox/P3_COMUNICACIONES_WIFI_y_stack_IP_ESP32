@@ -152,6 +152,7 @@ bool ping_Google(){
 }
 ````
 ### Conexión a servidor NTP
+Se ha desarrollado este código para conectarse a un servidor NTP. Un servidor NTP es un equipo de la red que proporciona la hora para sincronizar el reloj de otros dispositivos, nos servirá en este caso para saber la hora actual en Madrid.
 
 ```NTP.cpp
 bool mostrarHoraMadrid() {
@@ -176,4 +177,9 @@ bool mostrarHoraMadrid() {
 
     return true;
 }
+```
+```text
+1:53:23.941 > WiFi conectado.
+21:53:23.953 > IP del ESP32: 192.168.1.155
+21:53:26.789 > Fecha y hora de Madrid: 30/09/2026 21:53:26
 ```
