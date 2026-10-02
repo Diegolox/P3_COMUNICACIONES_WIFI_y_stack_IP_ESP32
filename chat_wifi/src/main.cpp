@@ -2,8 +2,8 @@
 #include <WiFi.h>
 
 // Editar con los datos del punto de acceso del portátil.
-const char *SSID = "NOMBRE_DEL_AP";
-const char *PASSWORD = "CONTRASENA_DEL_AP";
+const char *SSID = "PCDEDIEGO 7252";
+const char *PASSWORD = "5245R@3d";
 const uint16_t PORT = 5000;
 const size_t MAX_LINE = 512;
 
