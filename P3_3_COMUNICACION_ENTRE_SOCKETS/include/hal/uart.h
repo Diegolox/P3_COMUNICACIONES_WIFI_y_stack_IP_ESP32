@@ -1,10 +1,10 @@
-#pragma once
+#ifndef UART_H
+#define UART_H
 
 #include <Arduino.h>
 
 void initUART();
-
-// Devuelve true cuando se ha recibido una línea completa.
 bool leerMensajeUART(String& mensaje);
-
 void escribirMensajeUART(const String& mensaje);
+
+#endif

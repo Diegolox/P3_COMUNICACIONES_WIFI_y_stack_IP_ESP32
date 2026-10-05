@@ -1,10 +1,14 @@
 #include "hal/wifi.h"
 #include <WiFi.h>
 
-bool init_wifi() {
-    Serial.begin(115200);
-    delay(1000);
+// Edita estos datos con los del punto de acceso del PC.
+static const char* SSID = "NOMBRE_WIFI_PC";
+static const char* PASSWORD = "CONTRASENA_WIFI";
+static const uint16_t PUERTO = 5000;
 
+WiFiClient cliente;
+
+bool init_wifi() {
     // STA: el ESP32 se conecta a un punto de acceso.
     WiFi.mode(WIFI_STA);
 
@@ -109,7 +113,3 @@ bool abrirConexionTCP() {
     Serial.println("Conexion TCP abierta.");
     return true;
 }
-
-
-
-
