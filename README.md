@@ -183,3 +183,30 @@ bool mostrarHoraMadrid() {
 21:53:23.953 > IP del ESP32: 192.168.1.155
 21:53:26.789 > Fecha y hora de Madrid: 30/09/2026 21:53:26
 ```
+
+
+
+### Chat entre el ESP32 y el PC mediante sockets TCP
+
+Se ha desarrollado un chat para intercambiar mensajes entre el ESP32 y un PC. En este caso, el PC genera la red Wi-Fi y ejecuta un servidor TCP en Python en el puerto `5000`. El ESP32 se conecta a esa red y abre la conexión con el servidor mediante la siguiente llamada:
+
+```cpp
+cliente.connect(WiFi.gatewayIP(), PUERTO);
+```
+
+Una vez establecida la conexión, los mensajes escritos en el monitor serie del ESP32 se envían al PC. Para ello, se utiliza la siguiente función dentro de `coms.cpp`:
+
+```cpp
+static void enviarDesdeSerie() {
+    String mensaje;
+
+    if (leerMensajeUART(mensaje)) {
+        cliente.println(mensaje);
+        escribirMensajeUART("ESP32: " + mensaje);
+    }
+}
+```
+
+También se reciben los mensajes enviados desde el terminal del PC y se muestran en el monitor serie del ESP32. En ambos sentidos se utiliza un salto de línea para indicar el final de cada mensaje.
+
+El código se ha separado en los módulos `uart`, `wifi` y `coms`, manteniendo la estructura de capas de los apartados anteriores. Desde el `loop()` se llama continuamente a `actualizarComs()`, que gestiona el envío, la recepción y el cierre de la conexión. Para utilizar el chat, primero se ejecuta el servidor Python y después se arranca el ESP32.
