@@ -95,3 +95,21 @@ String obtenerIP() {
 
     return WiFi.localIP().toString();
 }
+
+// Abre una conexión con el servidor TCP del PC o dispositivo remoto.
+// Devuelve true si la conexión se establece correctamente.
+bool abrirConexionTCP() {
+    Serial.println("Conectando al servidor TCP...");
+
+    if (!cliente.connect(WiFi.gatewayIP(), PUERTO)) {
+        Serial.println("No se pudo abrir la conexion TCP.");
+        return false;
+    }
+
+    Serial.println("Conexion TCP abierta.");
+    return true;
+}
+
+
+
+
