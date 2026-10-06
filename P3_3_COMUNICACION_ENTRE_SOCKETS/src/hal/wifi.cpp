@@ -2,8 +2,8 @@
 #include <WiFi.h>
 
 // Edita estos datos con los del punto de acceso del PC.
-static const char* SSID = "NOMBRE_WIFI_PC";
-static const char* PASSWORD = "CONTRASENA_WIFI";
+static const char* SSID = "PCDEDIEGO 7252";
+static const char* PASSWORD = "5245R@3d";
 static const uint16_t PUERTO = 5000;
 
 WiFiClient cliente;
