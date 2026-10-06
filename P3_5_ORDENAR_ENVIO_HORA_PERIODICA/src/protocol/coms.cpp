@@ -20,8 +20,13 @@ static void enviarDesdeSerie() {
     }
 }
 
-// Acumula los bytes TCP hasta completar una linea y la muestra por UART.
-static void recibirDesdePC() {
+// Conserva los fragmentos TCP hasta encontrar el fin de un mensaje.
+// No interpreta comandos: esa decision pertenece a la capa de control.
+bool leerMensajePC(String& mensaje) {
+    if (!chatActivo) {
+        return false;
+    }
+
     while (cliente.available() > 0) {
         char caracter = cliente.read();
 
@@ -31,13 +36,20 @@ static void recibirDesdePC() {
 
         if (caracter == '\n') {
             if (mensajePC.length() > 0) {
-                escribirMensajeUART("PC: " + mensajePC);
+                mensaje = mensajePC;
                 mensajePC = "";
+                return true;
             }
         } else {
             mensajePC += caracter;
         }
     }
+
+    return false;
+}
+
+bool conexionTCPActiva() {
+    return chatActivo && cliente.connected();
 }
 
 // Abre el socket TCP cuando la conexion Wi-Fi ya esta disponible.
@@ -70,8 +82,7 @@ void actualizarComs() {
         enviarDesdeSerie();
     }
 
-    // Lee tambien los ultimos bytes si el PC acaba de cerrar el socket.
-    recibirDesdePC();
+    // La recepcion de comandos se atiende desde actualizarMEF().
 
     if (!cliente.connected()) {
         cliente.stop();
