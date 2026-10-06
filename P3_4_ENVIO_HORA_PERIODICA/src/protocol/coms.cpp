@@ -2,10 +2,13 @@
 #include "protocol/coms.h"
 #include "hal/uart.h"
 #include "hal/wifi.h"
+#include "network/NTP.h"
+#include <time.h>
 
 // Estas variables pertenecen al chat y solo se usan en este archivo.
 static String mensajePC;
 static bool chatActivo = false;
+static unsigned long ultimoEnvioHora = 0;
 
 // Lee una linea por UART y la envia al PC por TCP.
 static void enviarDesdeSerie() {
@@ -48,6 +51,11 @@ void initComs() {
     }
 
     chatActivo = true;
+
+    // Configura NTP y obtiene la hora inicial una vez al arrancar.
+    printHoraMadrid();
+    ultimoEnvioHora = millis();
+
     escribirMensajeUART("Chat listo. Escribe un mensaje y pulsa Enter.");
 }
 
@@ -70,5 +78,30 @@ void actualizarComs() {
         mensajePC = "";
         chatActivo = false;
         escribirMensajeUART("Conexion TCP cerrada. Reinicia para reconectar.");
+    }
+}
+
+// Se llama continuamente, pero solo envia la hora una vez por segundo.
+void enviarHoraPeriodicamente() {
+    if (!chatActivo || !cliente.connected()) {
+        return;
+    }
+
+    const unsigned long ahora = millis();
+    if (ahora - ultimoEnvioHora < 1000) {
+        return;
+    }
+    ultimoEnvioHora = ahora;
+
+    // Evita esperar 10 segundos si el reloj aun no se ha sincronizado.
+    struct tm fechaHora;
+    if (!getLocalTime(&fechaHora, 0)) {
+        return;
+    }
+
+    String hora = obtenerHoraMadrid();
+    if (hora.length() > 0) {
+        cliente.println(hora);
+        escribirMensajeUART("Hora enviada al PC: " + hora);
     }
 }

@@ -7,3 +7,5 @@ void initComs();
 // Se ejecuta continuamente desde loop().
 void actualizarComs();
 
+// Se llama desde loop(); envia la hora cada 1000 ms si hay conexion.
+void enviarHoraPeriodicamente();
