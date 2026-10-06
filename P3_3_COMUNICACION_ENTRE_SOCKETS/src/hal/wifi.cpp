@@ -1,12 +1,8 @@
 #include "hal/wifi.h"
 #include <WiFi.h>
 
-// Edita estos datos con los del punto de acceso del PC.
-static const char* SSID = "PCDEDIEGO 7252";
-static const char* PASSWORD = "5245R@3d";
-static const uint16_t PUERTO = 5000;
-
 WiFiClient cliente;
+
 
 bool init_wifi() {
     // STA: el ESP32 se conecta a un punto de acceso.
