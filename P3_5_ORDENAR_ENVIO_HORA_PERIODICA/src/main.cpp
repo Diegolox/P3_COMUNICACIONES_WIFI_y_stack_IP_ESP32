@@ -2,19 +2,24 @@
 #include "hal/uart.h"
 #include "hal/wifi.h"
 #include "protocol/coms.h"
+#include "app/mef.h"
 
 void setup() {
     initUART();
     delay(1000);
 
     if (!init_wifi()) {
-        escribirMensajeUART("Revisa el punto de acceso y reinicia el ESP32.");
+        escribirMensajeUART(
+            "Revisa el punto de acceso y reinicia el ESP32."
+        );
         return;
     }
 
     initComs();
+    initMEF();
 }
 
 void loop() {
-    enviarHoraPeriodicamente();
+    actualizarComs();
+    actualizarMEF();
 }
