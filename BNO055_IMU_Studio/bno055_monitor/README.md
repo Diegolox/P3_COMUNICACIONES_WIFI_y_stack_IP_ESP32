@@ -49,7 +49,18 @@ la gravedad; si se envía aceleración lineal, no la incluye.
 
 ## Orientación opcional real
 
-El panel también admite exclusivamente esta trama con prefijo:
+El panel acepta directamente el formato actual de tu ESP32, sin prefijo:
+
+```text
+rumbo;roll;pitch;accX;accY;accZ
+359.437;5.125;0.312;-0.010;0.040;-0.030
+```
+
+Rumbo se muestra como Yaw. Roll y Pitch se muestran como tales; los últimos
+valores corresponden a Ax, Ay y Az. Las líneas terminan en LF (`println`).
+Este formato actualiza también la orientación de la placa 3D.
+
+Además sigue admitiendo la trama con prefijo de la primera versión:
 
 ```text
 IMU;ax;ay;az;roll;pitch;yaw\n
@@ -77,6 +88,11 @@ Tkinter: https://docs.python.org/3/library/tkinter.html
 - Detener: cierra la red y termina la grabación activa.
 - Demo: genera muestras y ángulos simulados para probar la interfaz sin hardware.
   Para volver a recibir datos, sal de demo y reinicia el ESP32 si perdió la conexión.
+- Terminal: abre una ventana independiente con todas las líneas recibidas, hora
+  de recepción y origen. Incluye scroll, pausa de vista, copiar y limpiar; conserva
+  las últimas 1500 líneas aunque la ventana esté cerrada. Un segundo clic trae la
+  misma ventana al frente. RX muestra la trama recibida, DEMO los datos simulados
+  e INFO los mensajes del programa. Pausar no detiene el sensor ni el CSV.
 - Grabar CSV: pide un destino y guarda las nuevas muestras hasta pulsar de nuevo.
   El archivo usa `;`, incluye unidad, hora de recepción del PC y origen demo/TCP.
   No registra la hora de adquisición del sensor: el firmware no la transmite.
@@ -84,6 +100,7 @@ Tkinter: https://docs.python.org/3/library/tkinter.html
 `app.py`: interfaz, demo, gráficas y CSV.
 `network.py`: sockets en un hilo, separado del hilo de la interfaz.
 `protocol.py`: separación por líneas y validación de tramas.
+`terminal.py`: ventana de recepción con historial y controles.
 `view3d.py`: proyección 3D de la placa, ejes y vector.
 
 La cola de red y el historial tienen límites de memoria. Si llegan datos más rápido

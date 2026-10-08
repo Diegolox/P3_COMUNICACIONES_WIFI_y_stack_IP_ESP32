@@ -11,6 +11,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from network import Connection
 from protocol import Sample, parse_sample
+from terminal import ReceiveTerminal
 from view3d import draw, COLORS, BG
 
 
@@ -22,6 +23,7 @@ class App(tk.Tk):
         self.minsize(920, 700)
         self.configure(bg='#091321')
         self.net = Connection()
+        self.terminal = ReceiveTerminal(self)
         self.history = deque(maxlen=1200)
         self.latest = None
         self.reference = None
@@ -48,7 +50,21 @@ class App(tk.Tk):
         style.theme_use('clam')
         style.configure('TFrame', background='#091321')
         style.configure('TLabel', background='#091321', foreground='#dce7f7', font=('Segoe UI', 10))
-        style.configure('TButton', font=('Segoe UI', 10), padding=7)
+        # Botones planos con colores coherentes y respuesta a hover/clic/foco.
+        style.configure('TButton', font=('Segoe UI', 10, 'bold'), padding=(16,10),
+                        borderwidth=0, relief='flat', focusthickness=2, focuscolor='#66b7ff')
+        palettes = {
+            'Primary': ('#35c9ab','#60e1c5','#25ab90','#06251f'),
+            'Secondary': ('#22344d','#314b6b','#19283e','#e4eefb'),
+            'Danger': ('#482839','#643247','#35202c','#ffb5c4'),
+            'Amber': ('#eab75b','#ffd382','#c9953f','#2a1d08'),
+        }
+        for name,(base,hover,pressed,fg) in palettes.items():
+            button_style = name+'.TButton'
+            style.configure(button_style, background=base, foreground=fg)
+            style.map(button_style,
+                      background=[('disabled','#172438'),('pressed',pressed),('active',hover)],
+                      foreground=[('disabled','#64748b')])
         style.configure('TCombobox', padding=5)
         root = ttk.Frame(self, padding=20)
         root.pack(fill='both', expand=True)
@@ -63,9 +79,9 @@ class App(tk.Tk):
         ttk.Entry(row, textvariable=self.host, width=17).pack(side='left', padx=6)
         ttk.Label(row, text='Puerto').pack(side='left')
         ttk.Entry(row, textvariable=self.port, width=6).pack(side='left', padx=6)
-        ttk.Button(row, text='Conectar / escuchar', command=self.connect).pack(side='left', padx=4)
-        ttk.Button(row, text='Detener', command=self.stop).pack(side='left', padx=4)
-        self.demo_btn = ttk.Button(row, text='Demo', command=self.toggle_demo)
+        ttk.Button(row, text='Conectar / escuchar', style='Primary.TButton', command=self.connect).pack(side='left', padx=4)
+        ttk.Button(row, text='Detener', style='Danger.TButton', command=self.stop).pack(side='left', padx=4)
+        self.demo_btn = ttk.Button(row, text='Demo', style='Secondary.TButton', command=self.toggle_demo)
         self.demo_btn.pack(side='right')
         ttk.Label(root, textvariable=self.status, foreground='#4ce0b3').pack(anchor='w', pady=(10,2))
         # Muestra IPs locales como ayuda, sin suponer cuál pertenece al hotspot.
@@ -94,9 +110,10 @@ class App(tk.Tk):
         toolbar.pack(fill='x', pady=10)
         ttk.Label(toolbar, text='Unidad recibida:').pack(side='left')
         ttk.Combobox(toolbar, textvariable=self.unit, values=['m/s²','g','sin especificar'], state='readonly', width=14).pack(side='left', padx=8)
-        ttk.Button(toolbar, text='Centrar orientación', command=self.center).pack(side='left', padx=4)
-        self.record_btn = ttk.Button(toolbar, text='Grabar CSV', command=self.record)
+        ttk.Button(toolbar, text='Centrar orientación', style='Secondary.TButton', command=self.center).pack(side='left', padx=4)
+        self.record_btn = ttk.Button(toolbar, text='Grabar CSV', style='Amber.TButton', command=self.record)
         self.record_btn.pack(side='left', padx=4)
+        ttk.Button(toolbar, text='Terminal', style='Primary.TButton', command=self.terminal.open).pack(side='right')
         ttk.Label(root, textvariable=self.info, foreground='#8ca2bd').pack(anchor='w')
         self.log = tk.Text(root, height=5, bg='#0d192a', fg='#9db2cc', insertbackground='white', relief='flat', font=('Consolas',10), state='disabled')
         self.log.pack(fill='x', pady=(8,0))
@@ -106,6 +123,7 @@ class App(tk.Tk):
         self.host.set('0.0.0.0' if self.mode.get() == 'Servidor' else '192.168.137.2')
 
     def add_log(self, text):
+        self.terminal.push(text, 'INFO')
         self.log.configure(state='normal')
         self.log.insert('end', f'{datetime.now():%H:%M:%S}  {text}\n')
         if int(self.log.index('end-1c').split('.')[0]) > 160:
@@ -181,7 +199,7 @@ class App(tk.Tk):
             self.writer = csv.writer(self.csv_file, delimiter=';')
             self.writer.writerow(['fecha_pc','tiempo_s','ax','ay','az','modulo','unidad','roll_deg','pitch_deg','yaw_deg','origen'])
             self.csv_file.flush()
-            self.record_btn.configure(text='Parar grabación')
+            self.record_btn.configure(text='Parar grabación', style='Danger.TButton')
             self.add_log('Grabando CSV: '+path)
         except OSError as exc:
             self.end_recording()
@@ -195,7 +213,7 @@ class App(tk.Tk):
                 self.add_log('Error cerrando CSV: '+str(exc))
         self.csv_file = self.writer = None
         if hasattr(self, 'record_btn'):
-            self.record_btn.configure(text='Grabar CSV')
+            self.record_btn.configure(text='Grabar CSV', style='Amber.TButton')
 
     def accept_sample(self, sample):
         self.latest = sample
@@ -248,7 +266,9 @@ class App(tk.Tk):
         if self.demo:
             t = time.monotonic()-self.start_time
             factor = 1 if self.unit.get() == 'g' else 9.81
-            self.accept_sample(Sample(time.monotonic(),factor*.3*math.sin(t),factor*.25*math.cos(t*.8),factor*.95,25*math.sin(t*.7),20*math.cos(t*.5),(t*22)%360))
+            sample = Sample(time.monotonic(),factor*.3*math.sin(t),factor*.25*math.cos(t*.8),factor*.95,25*math.sin(t*.7),20*math.cos(t*.5),(t*22)%360)
+            self.terminal.push(f'IMU;{sample.ax:.3f};{sample.ay:.3f};{sample.az:.3f};{sample.roll:.3f};{sample.pitch:.3f};{sample.yaw:.3f}', 'DEMO')
+            self.accept_sample(sample)
         else:
             for _ in range(300):
                 try:
@@ -261,6 +281,7 @@ class App(tk.Tk):
                 elif kind == 'log':
                     self.add_log(value)
                 else:
+                    self.terminal.push(value, 'RX')
                     sample = parse_sample(value)
                     if sample:
                         self.accept_sample(sample)

@@ -20,12 +20,19 @@ class Sample:
 
 
 def parse_sample(line):
-    """Admite ax;ay;az o IMU;ax;ay;az;roll;pitch;yaw (grados)."""
+    """Admite tres formatos, siempre con fin de línea:
+    ax;ay;az
+    rumbo;roll;pitch;ax;ay;az (formato de tu ESP32, ángulos en grados)
+    IMU;ax;ay;az;roll;pitch;yaw (formato explícito de la versión inicial).
+    """
     fields = line.strip().split(';')
+    orientation_first = False
     if fields[0] == 'IMU':
         fields = fields[1:]
         if len(fields) != 6:
             return None
+    elif len(fields) == 6:
+        orientation_first = True
     elif len(fields) != 3:
         return None
     try:
@@ -34,6 +41,10 @@ def parse_sample(line):
         return None
     if not all(math.isfinite(v) and abs(v) <= 1e6 for v in values):
         return None
+    if orientation_first:
+        # El rumbo corresponde a yaw: reordenar al modelo interno de la interfaz.
+        yaw, roll, pitch, ax, ay, az = values
+        return Sample(time.monotonic(), ax, ay, az, roll, pitch, yaw)
     return Sample(time.monotonic(), *values)
 
 
