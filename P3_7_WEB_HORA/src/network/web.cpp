@@ -3,17 +3,18 @@
 #include <WebServer.h>
 #include "network/web.h"
 #include "network/web_html.h"
+#include "app/mef.h"
 
 // WebServer forma parte del framework Arduino para ESP32.
 static WebServer servidor(80);
 static bool webIniciada = false;
 
 void alPulsarReset() {
-    // Añade aquí lo que quieras hacer al pulsar Reset.
+    actualizarMEF(true, false);
 }
 
 void alPulsarPonerEnHora() {
-    // Añade aquí lo que quieras hacer al pulsar Poner en hora.
+    actualizarMEF(false, true);
 }
 
 void initWeb() {
