@@ -2,6 +2,7 @@
 #include "hal/uart.h"
 #include "hal/wifi.h"
 #include "network/web.h"
+#include "app/mef.h"
 
 void setup() {
     initUART();
@@ -12,6 +13,7 @@ void setup() {
         return;
     }
 
+    initMEF();
     initWeb();
 }
 

@@ -27,6 +27,12 @@ void initWeb() {
         servidor.send_P(200, "text/html; charset=utf-8", PAGINA_WEB);
     });
 
+    // El HTML consulta esta ruta para actualizar el reloj.
+    servidor.on("/hora", HTTP_GET, []() {
+        servidor.sendHeader("Cache-Control", "no-store");
+        servidor.send(200, "text/plain; charset=utf-8", obtenerHoraMEF());
+    });
+
     // El navegador envía una petición distinta por cada botón.
     servidor.on("/reset", HTTP_POST, []() {
         alPulsarReset();

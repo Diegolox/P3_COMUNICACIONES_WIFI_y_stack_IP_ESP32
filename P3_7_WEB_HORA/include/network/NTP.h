@@ -1,9 +1,11 @@
-#ifndef NTP_H
-#define NTP_H
-
+#pragma once
 #include <Arduino.h>
 
-// Devuelve "dd/mm/aaaa hh:mm:ss" o una cadena vacia si no hay hora disponible.
+// Inicia la sincronización en segundo plano; llamar con WiFi conectado.
+void initNTP();
+
+// Fecha y hora completas, conservadas para el resto del proyecto.
 String obtenerHoraMadrid();
 
-#endif
+// Solo HH:MM:SS. Devuelve "" si todavía no hay hora disponible.
+String obtenerHoraReloj();

@@ -1,7 +1,8 @@
 #pragma once
+#include <Arduino.h>
 
-// Establece SIN_HORA como estado inicial.
 void initMEF();
-
-// Procesa una pulsación. Si ambos argumentos son true, tiene prioridad Reset.
 void actualizarMEF(bool reset, bool ponerEnHora);
+
+// La MEF decide qué hora se muestra según su estado.
+String obtenerHoraMEF();
