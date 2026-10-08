@@ -2,7 +2,7 @@
 #include "hal/uart.h"
 #include "hal/wifi.h"
 #include "protocol/coms.h"
-#include "app/mef.h"
+#include "sensors/BNO055.h"
 
 void setup() {
     initUART();
@@ -16,10 +16,9 @@ void setup() {
     }
 
     initComs();
-    initMEF();
+    initBNO055();
 }
 
 void loop() {
-    actualizarComs();
-    actualizarMEF();
+    enviarIMUPeriodicamente(1000);
 }
