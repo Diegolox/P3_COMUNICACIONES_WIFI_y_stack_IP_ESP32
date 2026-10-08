@@ -210,3 +210,19 @@ static void enviarDesdeSerie() {
 También se reciben los mensajes enviados desde el terminal del PC y se muestran en el monitor serie del ESP32. En ambos sentidos se utiliza un salto de línea para indicar el final de cada mensaje.
 
 El código se ha separado en los módulos `uart`, `wifi` y `coms`, manteniendo la estructura de capas de los apartados anteriores. Desde el `loop()` se llama continuamente a `actualizarComs()`, que gestiona el envío, la recepción y el cierre de la conexión. Para utilizar el chat, primero se ejecuta el servidor Python y después se arranca el ESP32.
+
+
+
+### Envío periódico de datos del IMU por Wi-Fi
+
+En este caso, el ESP32 lee el sensor **BNO055 mediante I²C** y envía sus datos al ordenador a través de una **conexión TCP sobre Wi-Fi**. Ambos dispositivos están conectados a la misma red: el ordenador actúa como servidor TCP y el ESP32 se conecta como cliente.
+
+El ESP32 envía **una muestra cada segundo**, con las aceleraciones lineales de los tres ejes, en m/s² y sin la componente de gravedad. Cada mensaje utiliza el formato `accX;accY;accZ` y termina con un salto de línea, que permite al programa Python identificar cada muestra recibida.
+
+El código se organiza en módulos: `hal/wifi` gestiona la conexión de red, `sensors/BNO055` realiza las lecturas y `protocol/coms` prepara y transmite los mensajes. La función de envío utiliza `millis()` para controlar el intervalo entre muestras.
+
+Los datos recibidos pueden visualizarse desde el ordenador mediante una aplicación en Python, como se muestra en el siguiente vídeo.
+
+**Vídeo de demostración**
+
+👉 **[Añadir aquí el vídeo del programa Python mostrando los datos enviados por el ESP32]**
