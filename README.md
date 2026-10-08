@@ -226,3 +226,27 @@ Los datos recibidos pueden visualizarse desde el ordenador mediante una aplicaci
 **Vídeo de demostración**
 
 👉 **[Añadir aquí el vídeo del programa Python mostrando los datos enviados por el ESP32]**
+
+
+## Servidor web de hora en el ESP32
+
+El ESP32 se conecta a una red WiFi y aloja un servidor HTTP en el puerto 80. La página se abre desde un móvil u ordenador conectado a la misma red, introduciendo en el navegador la dirección `http://IP_DEL_ESP32/`, que aparece en el monitor serie.
+
+La interfaz muestra un reloj y dos botones, controlados mediante una **máquina de estados finitos (MEF)**:
+
+- **Reset:** pasa al estado `SIN_HORA` y mantiene la pantalla en `00:00:00`.
+- **Poner en hora:** pasa al estado `EN_HORA` e inicia la sincronización con un servidor NTP, utilizando la zona horaria de Madrid y el cambio automático entre horario de invierno y verano.
+
+El HTML está separado en `web_html.h`. Su JavaScript consulta la ruta `/hora` aproximadamente cada segundo y actualiza el reloj sin recargar la página. El ESP32 responde con la hora que corresponde al estado de la MEF:
+
+```cpp
+servidor.on("/hora", HTTP_GET, []() {
+    servidor.sendHeader("Cache-Control", "no-store");
+    servidor.send(200, "text/plain; charset=utf-8", obtenerHoraMEF());
+});
+```
+
+Mientras todavía no se dispone de una hora válida, se muestran ceros. La interfaz también incorpora `touch-action: manipulation` para evitar el zoom por doble toque al pulsar los botones en Safari del iPhone.
+
+<!-- Añadir aquí una captura de la página web y sustituir la ruta siguiente. -->
+![Reloj y botones del servidor web del ESP32](ruta/a/captura_web_hora.png)
