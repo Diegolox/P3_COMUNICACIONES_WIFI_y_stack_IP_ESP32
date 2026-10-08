@@ -65,13 +65,6 @@ void initComs() {
     }
 
     chatActivo = true;
-
-    // Configura NTP y obtiene la hora inicial una vez al arrancar.
-    printHoraMadrid();
-    ultimoEnvioHora = millis();
-    ultimoEnvioIMU = ultimoEnvioHora;
-
-    escribirMensajeUART("Chat listo. Escribe un mensaje y pulsa Enter.");
 }
 
 // Atiende las dos direcciones y detecta el cierre de la conexion.
@@ -127,16 +120,24 @@ void enviarIMUPeriodicamente(unsigned long periodoMs) {
         return;
     }
 
+    // Comprueba si ha pasado el intervalo entre envíos.
     const unsigned long ahora = millis();
     if (ahora - ultimoEnvioIMU < periodoMs) {
         return;
     }
     ultimoEnvioIMU = ahora;
 
+    // Lee la orientación y la aceleración del sensor.
     const DatosBNO055 datos = leerBNO055();
-    const String mensaje = String(datos.accX, 3) + ";" +
-                           String(datos.accY, 3) + ";" +
+
+    // Formato: rumbo;roll;pitch;accX;accY;accZ
+    const String mensaje = String(datos.rumbo, 3) + ";" +
+                           String(datos.roll, 3)  + ";" +
+                           String(datos.pitch, 3) + ";" +
+                           String(datos.accX, 3)  + ";" +
+                           String(datos.accY, 3)  + ";" +
                            String(datos.accZ, 3);
 
+    // Envía los seis valores y un salto de línea.
     cliente.println(mensaje);
 }
