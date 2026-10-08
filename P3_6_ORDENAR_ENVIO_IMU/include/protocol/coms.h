@@ -12,3 +12,6 @@ bool conexionTCPActiva();
 
 // Se llama repetidamente; internamente limita el envio a una vez por segundo.
 void enviarHoraPeriodicamente();
+
+// Envia de forma periodica los datos del IMU, se configura el periodo de envio en ms
+void enviarIMUPeriodicamente(unsigned long periodoMs);

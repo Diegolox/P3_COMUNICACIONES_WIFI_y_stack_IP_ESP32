@@ -3,12 +3,14 @@
 #include "hal/uart.h"
 #include "hal/wifi.h"
 #include "network/NTP.h"
+#include "sensors/BNO055.h"
 #include <time.h>
 
 // Estas variables pertenecen al chat y solo se usan en este archivo.
 static String mensajePC;
 static bool chatActivo = false;
 static unsigned long ultimoEnvioHora = 0;
+static unsigned long ultimoEnvioIMU = 0;
 
 // Lee una linea por UART y la envia al PC por TCP.
 static void enviarDesdeSerie() {
@@ -67,6 +69,7 @@ void initComs() {
     // Configura NTP y obtiene la hora inicial una vez al arrancar.
     printHoraMadrid();
     ultimoEnvioHora = millis();
+    ultimoEnvioIMU = ultimoEnvioHora;
 
     escribirMensajeUART("Chat listo. Escribe un mensaje y pulsa Enter.");
 }
@@ -115,4 +118,25 @@ void enviarHoraPeriodicamente() {
         cliente.println(hora);
         escribirMensajeUART("Hora enviada al PC: " + hora);
     }
+}
+
+// Llamar repetidamente tras inicializar el BNO055 correctamente.
+// Envia una linea con las tres aceleraciones: accX;accY;accZ.
+void enviarIMUPeriodicamente(unsigned long periodoMs) {
+    if (!conexionTCPActiva()) {
+        return;
+    }
+
+    const unsigned long ahora = millis();
+    if (ahora - ultimoEnvioIMU < periodoMs) {
+        return;
+    }
+    ultimoEnvioIMU = ahora;
+
+    const DatosBNO055 datos = leerBNO055();
+    const String mensaje = String(datos.accX, 3) + ";" +
+                           String(datos.accY, 3) + ";" +
+                           String(datos.accZ, 3);
+
+    cliente.println(mensaje);
 }
