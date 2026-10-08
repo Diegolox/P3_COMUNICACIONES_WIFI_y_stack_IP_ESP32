@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "hal/uart.h"
 #include "hal/wifi.h"
-#include "protocol/coms.h"
+#include "network/web.h"
 
 void setup() {
     initUART();
@@ -12,9 +12,10 @@ void setup() {
         return;
     }
 
-    initComs();
+    initWeb();
 }
 
 void loop() {
-    enviarHoraPeriodicamente();
+    actualizarWeb();
+    delay(1);
 }
