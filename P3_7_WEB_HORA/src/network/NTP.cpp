@@ -6,9 +6,6 @@ static bool configurado = false;
 
 void initNTP() {
     if (WiFi.status() != WL_CONNECTED) return;
-
-    // Hora peninsular: CET en invierno y CEST en verano.
-    // La sincronización se hace en segundo plano, sin esperar aquí.
     configTzTime("CET-1CEST,M3.5.0,M10.5.0/3", "pool.ntp.org");
     configurado = true;
 }
