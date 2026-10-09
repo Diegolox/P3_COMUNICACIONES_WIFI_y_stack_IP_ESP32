@@ -4,6 +4,7 @@
 #include "hal/wifi.h"
 #include "network/FTP.h"
 
+int i = 0;
 
 void setup() {
     initUART();
@@ -16,8 +17,13 @@ void setup() {
 
 void loop() {
     String temp = generar_temp();
-    Serial.println(temp);
-    subirArchivoFTP("temperatura.json", temp);
-    delay(1000);
+    String nombre = "temperatura" + String(i) + ".json";
 
+    Serial.println(nombre);
+    Serial.println(temp);
+
+    subirArchivoFTP(nombre.c_str(), temp);
+
+    i++;
+    delay(10000);
 }
