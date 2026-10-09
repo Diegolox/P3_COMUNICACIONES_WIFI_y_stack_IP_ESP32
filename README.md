@@ -250,3 +250,20 @@ Mientras todavía no se dispone de una hora válida, se muestran ceros. La inter
 
 <!-- Añadir aquí una captura de la página web y sustituir la ruta siguiente. -->
 ![Reloj y botones del servidor web del ESP32](ruta/a/captura_web_hora.png)
+
+
+
+
+### Envío de archivos mediante FTP
+
+En [este apartado](https://github.com/Diegolox/P3_COMUNICACIONES_WIFI_y_stack_IP_ESP32/tree/main/P3_9_SERVER_FTP), el ESP32 se conecta al Wi-Fi y actúa como **cliente FTP**, enviando archivos a un servidor **FileZilla Server** instalado en el portátil.
+
+Se generan temperaturas aleatorias y se representan en JSON siguiendo el formato **SenML**, indicando el nombre, la unidad (`Cel`) y el valor:
+
+```json
+[{"n":"temp","u":"Cel","v":23.50}]
+```
+
+La función `subirArchivoFTP()` utiliza la biblioteca `ESP32_FTPClient` para conectar al servidor, identificarse, crear el archivo, enviar su contenido y cerrar la conexión. Cada envío utiliza un nombre distinto: `temperatura0.json`, `temperatura1.json`, etc.
+
+En FileZilla se configura un usuario con permisos de escritura y una carpeta de destino. Para permitir la comunicación, se habilitan en el firewall el **puerto TCP 21** y el rango pasivo **5000–5010**, utilizado para transferir los datos.
