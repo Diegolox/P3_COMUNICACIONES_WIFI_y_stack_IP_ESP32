@@ -9,7 +9,7 @@ bool init_wifi() {
     WiFi.mode(WIFI_STA);
 
     // Primero escanea y después intenta conectar al AP configurado.
-    escanearWiFi();
+    //escanearWiFi();
 
     if (!conectarWiFi(SSID, PASSWORD)) {
         Serial.println("No se pudo conectar al AP.");
