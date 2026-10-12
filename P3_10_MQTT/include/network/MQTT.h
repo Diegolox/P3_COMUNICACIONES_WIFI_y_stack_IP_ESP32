@@ -12,3 +12,4 @@ bool initMQTT(bool suscriptor = false);
 // Para un único feed, llamar cada 5 segundos es un buen punto de partida.
 bool envioMQTT(float dato);
 
+String recibirMQTT();

@@ -17,17 +17,11 @@ void setup() {
 }
 
 void loop() {
-    static unsigned long ultimoEnvio = 0;
-    const unsigned long ahora = millis();
+    String dato = recibirMQTT();
 
-    if (ahora - ultimoEnvio >= 5000) {
-        ultimoEnvio = ahora;
-
-        float temp = generar_temp_float();
-        Serial.println(temp);
-
-        if (!envioMQTT(temp)) {
-            Serial.println("No se pudo enviar el dato");
-        }
+    if (!dato.isEmpty()) {
+        Serial.print("MQTT: dato recibido: ");
+        Serial.println(dato);
     }
+    delay(500);
 }

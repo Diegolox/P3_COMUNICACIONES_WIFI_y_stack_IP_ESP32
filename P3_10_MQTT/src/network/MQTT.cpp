@@ -105,12 +105,13 @@ String recibirMQTT() {
     String dato = "";
     Adafruit_MQTT_Subscribe* mensaje;
 
+    // Lee los mensajes disponibles, esperando hasta 10 ms por lectura.
     while ((mensaje = mqtt.readSubscription(10)) != nullptr) {
         if (mensaje == &suscripcion) {
+            // Copia el contenido del mensaje como texto.
             dato = reinterpret_cast<const char*>(suscripcion.lastread);
         }
     }
 
-    // Devuelve el último dato recibido o "" si no recibió ninguno.
     return dato;
 }
