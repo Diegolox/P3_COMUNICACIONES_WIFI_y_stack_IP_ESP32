@@ -269,3 +269,31 @@ La función `subirArchivoFTP()` utiliza la biblioteca `ESP32_FTPClient` para con
 En FileZilla se configura un usuario con permisos de escritura y una carpeta de destino. Para permitir la comunicación, se habilitan en el firewall el **puerto TCP 21** y el rango pasivo **5000–5010**, utilizado para transferir los datos.
 
 Teniendo este proceso una periodicidad de diez segundos para este caso.
+
+
+
+## Comunicación MQTT con Adafruit IO
+
+En esta apartado se utiliza la biblioteca **Adafruit MQTT Library** para comunicar el ESP32 con **Adafruit IO** mediante MQTT. El ESP32 se conecta al WiFi como estación y establece una conexión con el broker `io.adafruit.com` por el puerto TCP `1883`.
+
+El **broker** recibe los mensajes publicados en cada *topic* y los distribuye a los clientes suscritos. En este proyecto, el topic tiene el formato `USUARIO/feeds/CLAVE_DEL_FEED`, donde se identifica el feed de temperatura.
+
+> **[Insertar diagrama: ESP32 publicador → broker Adafruit IO → clientes suscritos. Añadir también el envío desde el navegador hacia Adafruit IO y su recepción en el ESP32.]**
+
+La comunicación se organiza en tres funciones de `MQTT.cpp`:
+
+- **`initMQTT()`**: conecta con el broker utilizando el usuario y la AIO Key. Con `initMQTT(true)` también registra la suscripción al feed.
+- **`envioMQTT(float dato)`**: publica un valor numérico en el feed configurado.
+- **`recibirMQTT()`**: lee los mensajes del feed y devuelve el último dato recibido como `String`, o una cadena vacía si no hay mensajes nuevos.
+
+El ESP32 puede actuar como publicador y suscriptor con la misma conexión. Si publica en el mismo feed al que está suscrito, también recibe sus propios mensajes.
+
+> **[Insertar captura del feed de temperatura en Adafruit IO y de los datos publicados por el ESP32.]**
+
+En la versión actual, el programa llama periódicamente a `recibirMQTT()` y muestra los datos recibidos por el monitor serie. Para comprobar la suscripción, se añade un valor desde el navegador mediante **Add Data** en el feed de Adafruit IO. El broker envía esa actualización al ESP32, que la muestra por UART.
+
+> **[Insertar captura del valor añadido desde el navegador y de su recepción en el monitor serie.]**
+
+La conexión utiliza MQTT sin TLS por el puerto `1883`. La AIO Key debe configurarse localmente y mantenerse fuera del repositorio.
+
+
