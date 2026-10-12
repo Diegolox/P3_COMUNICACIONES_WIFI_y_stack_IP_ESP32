@@ -1,4 +1,5 @@
 #pragma once
+#include <Arduino.h>
 
 // Requiere que el ESP32 ya tenga conexión WiFi.
 // Devuelve true si MQTT está conectado; false si no puede conectar.
