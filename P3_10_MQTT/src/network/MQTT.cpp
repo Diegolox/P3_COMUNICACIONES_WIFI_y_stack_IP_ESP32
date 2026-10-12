@@ -97,6 +97,20 @@ bool envioMQTT(float dato) {
     return enviado;
 }
 
+String recibirMQTT() {
+    if (!initMQTT(true)) {
+        return "";
+    }
 
+    String dato = "";
+    Adafruit_MQTT_Subscribe* mensaje;
 
+    while ((mensaje = mqtt.readSubscription(10)) != nullptr) {
+        if (mensaje == &suscripcion) {
+            dato = reinterpret_cast<const char*>(suscripcion.lastread);
+        }
+    }
 
+    // Devuelve el último dato recibido o "" si no recibió ninguno.
+    return dato;
+}
