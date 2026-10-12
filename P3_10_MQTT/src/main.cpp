@@ -2,7 +2,7 @@
 #include "hal/uart.h"
 #include "sensors/temp.h"
 #include "hal/wifi.h"
-#include "network/FTP.h"
+#include "network/MQTT.h"
 
 int i = 0;
 
@@ -13,17 +13,21 @@ void setup() {
         Serial.println("Error al conectar el Wi-Fi");
         return;
     }
+    initQTT();
 }
 
 void loop() {
-    String temp = generar_temp();
-    String nombre = "temperatura" + String(i) + ".json";
+    static unsigned long ultimoEnvio = 0;
+    const unsigned long ahora = millis();
 
-    Serial.println(nombre);
+    float temp = generar_temp();
     Serial.println(temp);
+    if (ahora - ultimoEnvio >= 5000) {
+        ultimoEnvio = ahora;
 
-    subirArchivoFTP(nombre.c_str(), temp);
-
-    i++;
-    delay(10000);
+        if (!envioMQTT(temp)) {
+            Serial.println("No se pudo enviar el dato");
+        }
+    }
 }
+

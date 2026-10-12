@@ -7,7 +7,7 @@
 
 // ---------- CONFIGURACIÓN: cambia estos tres valores ----------
 #define AIO_USERNAME "Diegolox"
-#define AIO_KEY      "aio_Snkj82CQloZhQlTxgRax8631HYVX"
+#define AIO_KEY      ""
 #define AIO_FEED_KEY "Temperatura"
 
 // Esta versión usa MQTT sin TLS: el puerto 1883 no cifra los datos
