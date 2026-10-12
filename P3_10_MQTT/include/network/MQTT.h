@@ -3,7 +3,8 @@
 // Requiere que el ESP32 ya tenga conexión WiFi.
 // Devuelve true si MQTT está conectado; false si no puede conectar.
 // Hace un intento de conexión por llamada.
-bool initMQTT();
+// MQTT.h
+bool initMQTT(bool suscriptor = false);
 
 // Publica un número en el feed configurado en MQTT.cpp.
 // Si MQTT está desconectado, intenta conectarlo primero.

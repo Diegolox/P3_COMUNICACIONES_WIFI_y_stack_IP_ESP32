@@ -28,28 +28,46 @@ Adafruit_MQTT_Publish feed(
     &mqtt, AIO_USERNAME "/feeds/" AIO_FEED_KEY
 );
 
+// Escucha los datos publicados en el mismo feed.
+Adafruit_MQTT_Subscribe suscripcion(
+    &mqtt, AIO_USERNAME "/feeds/" AIO_FEED_KEY
+);
+
 }  // namespace
 
-bool initMQTT() {
-    // MQTT necesita una conexión de red previa.
+bool initMQTT(bool suscriptor) {
+    static bool suscripcionRegistrada = false;
+
+    // Si se activa la recepción, registra el feed una sola vez.
+    if (suscriptor && !suscripcionRegistrada) {
+        if (!mqtt.subscribe(&suscripcion)) {
+            Serial.println("MQTT: no se pudo registrar la suscripcion");
+            return false;
+        }
+
+        suscripcionRegistrada = true;
+
+        // Si ya estaba conectado, reconecta para solicitar
+        // al broker la nueva suscripción.
+        mqtt.disconnect();
+    }
+
     if (WiFi.status() != WL_CONNECTED) {
         mqtt.disconnect();
-        Serial.println("MQTT: no hay conexión WiFi");
+        Serial.println("MQTT: no hay conexion WiFi");
         return false;
     }
 
-    // Conserva la conexión existente.
     if (mqtt.connected()) {
         return true;
     }
 
     Serial.println("MQTT: conectando con Adafruit IO...");
 
-    // Adafruit MQTT devuelve 0 cuando el broker acepta la conexión.
     const int8_t resultado = mqtt.connect();
 
     if (resultado != 0) {
-        Serial.print("MQTT: error de conexión: ");
+        Serial.print("MQTT: error de conexion: ");
         Serial.println(mqtt.connectErrorString(resultado));
         mqtt.disconnect();
         return false;
@@ -78,4 +96,7 @@ bool envioMQTT(float dato) {
 
     return enviado;
 }
+
+
+
 
