@@ -1,7 +1,6 @@
 #include "network/MQTT.h"
 #include <Arduino.h>
 #include <WiFi.h>
-#include <WiFiClient.h>
 #include <Adafruit_MQTT.h>
 #include <Adafruit_MQTT_Client.h>
 

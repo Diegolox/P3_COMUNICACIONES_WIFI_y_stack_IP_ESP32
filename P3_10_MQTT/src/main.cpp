@@ -13,14 +13,14 @@ void setup() {
         Serial.println("Error al conectar el Wi-Fi");
         return;
     }
-    initQTT();
+    initMQTT();
 }
 
 void loop() {
     static unsigned long ultimoEnvio = 0;
     const unsigned long ahora = millis();
 
-    float temp = generar_temp();
+    float temp = generar_temp_float();
     Serial.println(temp);
     if (ahora - ultimoEnvio >= 5000) {
         ultimoEnvio = ahora;
