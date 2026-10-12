@@ -1,6 +1,6 @@
 <div align="justify">
 
-# 📡 Práctica 3 · Comunicaciones Wi-Fi y stack IP con ESP32
+# Práctica 3 · Comunicaciones Wi-Fi y stack IP con ESP32
 
 <p align="center"><strong>ESP32 · Wi-Fi · TCP/IP · NTP · HTTP · SenML · FTP · MQTT</strong></p>
 
@@ -10,20 +10,20 @@ En esta práctica se trabaja con un ESP32 conectado a una red Wi-Fi y se desarro
 
 El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpeta conserva una etapa del desarrollo y permite cargar en el ESP32 la aplicación correspondiente. Se mantiene la organización por capas utilizada en las prácticas anteriores, separando el acceso al hardware, los sensores, las comunicaciones y el control de la aplicación.
 
-## 🧭 Acceso rápido a las demostraciones
+## Acceso rápido a las demostraciones
 
 | **Demostración** | **Apartado** | **Qué se muestra** |
 | --- | --- | --- |
-| Control del envío | [🎛️ start / stop](#control) | Comandos TCP, cambios de estado y mensajes por UART. |
-| Telemetría IMU | [📊 BNO055 y app Python](#imu) | Gráfica común XYZ, orientación y movimiento de la placa 3D. |
-| Servidor web | [🌐 Reloj y botones](#web) | Consulta de hora, Reset y puesta en hora mediante NTP. |
-| Archivos JSON | [📁 Transferencia FTP](#ftp) | JSON generado en el ESP32 y archivo recibido en el PC. |
-| Adafruit IO | [☁️ HTTP y MQTT](#mqtt) | Publicación en el feed y recepción de valores desde el navegador. |
+| Control del envío | [start / stop](#control) | Comandos TCP, cambios de estado y mensajes por UART. |
+| Telemetría IMU | [BNO055 y app Python](#imu) | Gráfica común XYZ, orientación y movimiento de la placa 3D. |
+| Servidor web | [Reloj y botones](#web) | Consulta de hora, Reset y puesta en hora mediante NTP. |
+| Archivos JSON | [Transferencia FTP](#ftp) | JSON generado en el ESP32 y archivo recibido en el PC. |
+| Adafruit IO | [HTTP y MQTT](#mqtt) | Publicación en el feed y recepción de valores desde el navegador. |
 
 Los resúmenes y los espacios de demostración quedan visibles. Los desplegables reúnen la explicación técnica, los pasos de uso y los fragmentos de código.
 
 
-## 🗂️ Organización y arquitectura
+## Organización y arquitectura
 
 | **Carpeta** | **Aplicación** |
 | --- | --- |
@@ -40,12 +40,12 @@ Los resúmenes y los espacios de demostración quedan visibles. Los desplegables
 | [BNO055_IMU_Studio](BNO055_IMU_Studio/) | Interfaz Python para visualizar y registrar la telemetría. |
 | [chat_wifi](chat_wifi/) | Versión alternativa del chat TCP para un portátil Windows. |
 
-### 🖼️ Esquema de la arquitectura
+### Esquema de la arquitectura
 
 > 🖼️ **AÑADIR ESQUEMA:** arquitectura por capas y responsabilidades, con una versión para modo claro y otra para modo oscuro.
 
 <details>
-<summary><strong>🌓 Plantilla para insertar el esquema claro / oscuro</strong></summary>
+<summary><strong>Plantilla para insertar el esquema claro / oscuro</strong></summary>
 
 Guarda ambas versiones en el repositorio y sustituye las rutas del siguiente bloque. Para mostrar la imagen, pega el bloque HTML fuera de las comillas de código y reemplaza este marcador.
 
@@ -79,7 +79,7 @@ Las carpetas de firmware utilizan la siguiente separación de responsabilidades:
 
 Cada aplicación se describe a partir de las funciones que ejecuta su propio `main.cpp`. Los módulos auxiliares se reutilizan entre carpetas a lo largo del desarrollo.
 
-## 🛠️ Material y entorno de desarrollo
+## Material y entorno de desarrollo
 
 <details>
 <summary><strong>Consultar hardware, bibliotecas y preparación de los proyectos</strong></summary>
@@ -103,7 +103,7 @@ Para trabajar con una etapa se abre su carpeta como proyecto de PlatformIO, se c
 
 <a name="wifi"></a>
 
-## 📡 01. Wi-Fi, escaneo de redes y obtención de IP
+## 01. Wi-Fi, escaneo de redes y obtención de IP
 
 **Estación Wi-Fi · DHCP · RSSI · ping a Google**
 
@@ -116,7 +116,7 @@ El ESP32 funciona como **estación Wi-Fi (STA)**: se conecta a un punto de acces
 > 🎬 **AÑADIR VÍDEO:** Vídeo opcional de la conexión y el resultado del ping.
 
 <details>
-<summary><strong>🔎 Escaneo, conexión, direcciones IP y código del ping</strong></summary>
+<summary><strong>Escaneo, conexión, direcciones IP y código del ping</strong></summary>
 
 La función `init_wifi()` realiza la secuencia de arranque:
 
@@ -182,7 +182,7 @@ Se utiliza ICMP para comprobar que existe conectividad con un equipo externo. Al
 
 <a name="ntp"></a>
 
-## 🕒 02. Sincronización de hora mediante NTP
+## 02. Sincronización de hora mediante NTP
 
 **pool.ntp.org · hora de Madrid · cambio CET/CEST**
 
@@ -193,7 +193,7 @@ Una vez conectado a la red, el ESP32 obtiene la hora de `pool.ntp.org`. NTP perm
 > 📷 **AÑADIR FOTO / CAPTURA:** Captura de la fecha y hora sincronizadas por NTP.
 
 <details>
-<summary><strong>🔎 Configuración NTP, lectura del reloj y ejemplo de salida</strong></summary>
+<summary><strong>Configuración NTP, lectura del reloj y ejemplo de salida</strong></summary>
 
 ```cpp
 configTzTime("CET-1CEST,M3.5.0,M10.5.0/3", "pool.ntp.org");
@@ -227,7 +227,7 @@ Fecha y hora de Madrid: 30/09/2026 21:53:26
 
 <a name="chat"></a>
 
-## 💬 03. Chat entre el ESP32 y el PC mediante sockets TCP
+## 03. Chat entre el ESP32 y el PC mediante sockets TCP
 
 **PC servidor · ESP32 cliente · TCP 5000 · mensajes delimitados por LF**
 
@@ -240,7 +240,7 @@ El portátil genera el punto de acceso Wi-Fi y ejecuta el servidor TCP. El ESP32
 > 🎬 **AÑADIR VÍDEO:** Vídeo del chat bidireccional ESP32 ↔ PC.
 
 <details>
-<summary><strong>🔎 Sockets, envío/recepción y pasos para iniciar el chat</strong></summary>
+<summary><strong>Sockets, envío/recepción y pasos para iniciar el chat</strong></summary>
 
 El programa [chat_ESP32_PC.py](P3_03_COMUNICACION_ENTRE_SOCKETS/chat_ESP32_PC.py) escucha en `0.0.0.0`, puerto `5000`. Utiliza un socket IPv4 de tipo `SOCK_STREAM`:
 
@@ -286,7 +286,7 @@ El chat funciona dentro de la red local. Para iniciar otra sesión tras el cierr
 
 <a name="hora-tcp"></a>
 
-## ⏱️ 04. Envío periódico de hora por TCP
+## ⏱ 04. Envío periódico de hora por TCP
 
 **Fecha y hora local · intervalo de 1 s · temporización con millis()**
 
@@ -297,7 +297,7 @@ Esta etapa utiliza la conexión TCP para transmitir la fecha y hora local del ES
 > 📷 **AÑADIR FOTO / CAPTURA:** Captura del PC recibiendo la hora cada segundo.
 
 <details>
-<summary><strong>🔎 Temporización, formato de mensaje y envío al servidor</strong></summary>
+<summary><strong>Temporización, formato de mensaje y envío al servidor</strong></summary>
 
 La función comprueba que el cliente siga conectado y utiliza `millis()` para espaciar los envíos un segundo:
 
@@ -321,7 +321,7 @@ La temporización del envío se realiza leyendo el reloj local del ESP32; enviar
 
 <a name="control"></a>
 
-## 🎛️ 05. Control del envío mediante start y stop
+## 05. Control del envío mediante start y stop
 
 **MEF PARADO/ENVIANDO · comandos desde el PC · seguimiento por UART**
 
@@ -334,7 +334,7 @@ Se añade una máquina de estados finitos que controla cuándo se transmite la h
 > 🎬 **AÑADIR VÍDEO:** Vídeo: start → recepción de hora → stop, con el monitor serie visible.
 
 <details>
-<summary><strong>🔎 Estados, comandos y funcionamiento del control</strong></summary>
+<summary><strong>Estados, comandos y funcionamiento del control</strong></summary>
 
 | **Estado** | **Comportamiento** |
 | --- | --- |
@@ -371,7 +371,7 @@ Para mostrar el funcionamiento se inicia el servidor Python, se conecta el ESP32
 
 <a name="imu"></a>
 
-## 📊 06. Orientación y aceleración del BNO055 por Wi-Fi
+## 06. Orientación y aceleración del BNO055 por Wi-Fi
 
 **6 valores · 100 ms · 10 Hz nominales · gráfica XYZ y orientación 3D**
 
@@ -388,7 +388,7 @@ El ESP32 lee el BNO055 por I²C y transmite las muestras al ordenador mediante T
 > 📷 **AÑADIR FOTO / CAPTURA:** Captura opcional del terminal de la app o del CSV guardado.
 
 <details>
-<summary><strong>🔎 I²C, lectura del BNO055, trama TCP y aplicación Python</strong></summary>
+<summary><strong>I²C, lectura del BNO055, trama TCP y aplicación Python</strong></summary>
 
 `initBNO055()` inicializa el bus mediante `Wire.begin()` y comprueba la respuesta del sensor con `bno.begin()`. El resultado se guarda en `imuListo`, de manera que la aplicación solo llama al envío de muestras si la inicialización del sensor ha tenido éxito.
 
@@ -468,7 +468,7 @@ El servidor Python vuelve a esperar conexiones si el cliente se desconecta. Para
 
 <a name="web"></a>
 
-## 🌐 07. Servidor web de hora en el ESP32
+## 07. Servidor web de hora en el ESP32
 
 **HTTP 80 · reloj · Reset · Poner en hora · actualización sin recargar**
 
@@ -481,7 +481,7 @@ En este apartado el ESP32 actúa como **servidor HTTP** en el puerto `80`. Un m�
 > 🎬 **AÑADIR VÍDEO:** Vídeo: Poner en hora → reloj actualizado → Reset → 00:00:00.
 
 <details>
-<summary><strong>🔎 Rutas HTTP, JavaScript, máquina de estados y HTML</strong></summary>
+<summary><strong>Rutas HTTP, JavaScript, máquina de estados y HTML</strong></summary>
 
 La página contiene un reloj y dos botones: **Reset** y **Poner en hora**. El HTML, CSS y JavaScript están separados del servidor en `include/network/web_html.h` y almacenados en flash mediante `PROGMEM`. La página se entrega con `servidor.send_P()`.
 
@@ -534,7 +534,7 @@ La página se adapta a móvil y ordenador. Utiliza `touch-action: manipulation` 
 El JavaScript comprueba el formato `hh:mm:ss`, evita consultas simultáneas y utiliza una revisión para descartar respuestas anteriores a una pulsación más reciente. Así una consulta pendiente no sobrescribe el reloj con un dato anterior al reset.
 
 <details>
-<summary><strong>💻 Ver el HTML, CSS y JavaScript completos de la página</strong></summary>
+<summary><strong>Ver el HTML, CSS y JavaScript completos de la página</strong></summary>
 
 Contenido de `P3_07_WEB_HORA/include/network/web_html.h`, servido desde la memoria flash del ESP32.
 
@@ -673,7 +673,7 @@ Contenido de `P3_07_WEB_HORA/include/network/web_html.h`, servido desde la memor
 
 <a name="json"></a>
 
-## 🧾 08. Temperatura en JSON con campos SenML
+## 08. Temperatura en JSON con campos SenML
 
 **Temperatura simulada · campos n/u/v · unidad Cel · dos decimales**
 
@@ -684,7 +684,7 @@ Se desarrolla el módulo `sensors/temp` para producir temperaturas simuladas y r
 > 📷 **AÑADIR FOTO / CAPTURA:** Captura de los JSON generados en el monitor serie.
 
 <details>
-<summary><strong>🔎 Generación de temperatura, campos y serialización JSON</strong></summary>
+<summary><strong>Generación de temperatura, campos y serialización JSON</strong></summary>
 
 `generar_temp()` obtiene una temperatura mediante `random()` y la pasa a `generarJSON(float dato)`. La simulación suma una parte entera entre 0 y 50 y una fracción entre 0 y 0,50; puede producir valores entre **0,00 y 50,50 °C**.
 
@@ -723,7 +723,7 @@ En este proyecto, `loop()` imprime un nuevo JSON por el monitor serie e introduc
 
 <a name="ftp"></a>
 
-## 📁 09. Envío de archivos JSON mediante FTP
+## 09. Envío de archivos JSON mediante FTP
 
 **ESP32 cliente · FileZilla Server · temperaturaN.json · pausa de 10 s**
 
@@ -738,7 +738,7 @@ El ESP32 actúa como **cliente FTP** y envía los registros de temperatura a **F
 > 🎬 **AÑADIR VÍDEO:** Vídeo de la creación y recepción de archivos JSON por FTP.
 
 <details>
-<summary><strong>🔎 Nombres de archivo, transferencia y configuración de FileZilla</strong></summary>
+<summary><strong>Nombres de archivo, transferencia y configuración de FileZilla</strong></summary>
 
 ### Generación y nombres de archivo
 
@@ -788,7 +788,7 @@ Para mostrar el resultado se abre uno de los archivos de la carpeta de destino y
 
 <a name="mqtt"></a>
 
-## ☁️ 10. Comunicación con Adafruit IO
+## 10. Comunicación con Adafruit IO
 
 **HTTP POST · MQTT 1883 · publicación y suscripción al feed**
 
@@ -807,7 +807,7 @@ Adafruit IO permite almacenar y consultar medidas mediante feeds. Cada feed tien
 > 🎬 **AÑADIR VÍDEO:** Vídeo de la comunicación en ambos sentidos: ESP32 → feed y navegador → ESP32.
 
 <details>
-<summary><strong>🔎 API HTTP, broker, topics, funciones MQTT y recepción desde el navegador</strong></summary>
+<summary><strong>API HTTP, broker, topics, funciones MQTT y recepción desde el navegador</strong></summary>
 
 ### Escritura de datos mediante HTTP POST
 
@@ -905,7 +905,7 @@ La conexión de este módulo utiliza MQTT sin TLS por el puerto `1883`. Las cred
 
 ---
 
-## 🧩 Desarrollo adicional: chat_wifi
+## Desarrollo adicional: chat_wifi
 
 <details>
 <summary><strong>Consultar la variante autónoma del chat para Windows</strong></summary>
@@ -920,7 +920,7 @@ En Python se utilizan `select` y `msvcrt` para recibir mensajes y atender el tec
 
 ---
 
-## 🔗 Resumen de las comunicaciones utilizadas
+## Resumen de las comunicaciones utilizadas
 
 | **Comunicación** | **Papel del ESP32** | **Extremo remoto** | **Información intercambiada** |
 | --- | --- | --- | --- |
@@ -934,7 +934,7 @@ En Python se utilizan `select` y `msvcrt` para recibir mensajes y atender el tec
 
 Los apartados muestran cómo se reutiliza la conexión Wi-Fi para distintas aplicaciones y cómo cambia el papel del ESP32: cliente en TCP, NTP, FTP y MQTT, y servidor en la aplicación web.
 
-## 📚 Referencias
+## Referencias
 
 <details>
 <summary><strong>Consultar documentación y bibliotecas</strong></summary>
