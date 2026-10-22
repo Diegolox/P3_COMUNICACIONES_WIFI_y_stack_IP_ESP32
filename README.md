@@ -4,24 +4,11 @@
 
 <p align="center"><strong>ESP32 · Wi-Fi · TCP/IP · NTP · HTTP · SenML · FTP · MQTT</strong></p>
 
-## Presentación
-
 En esta práctica se trabaja con un ESP32 conectado a una red Wi-Fi y se desarrollan distintas aplicaciones sobre el stack IP: comprobación de conectividad mediante ping, sincronización de hora con NTP, comunicación bidireccional mediante sockets TCP, transmisión de datos de una IMU, servidor web, generación de datos JSON con campos SenML, transferencia de archivos mediante FTP y comunicación MQTT con Adafruit IO.
 
+###
+
 El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpeta conserva una etapa del desarrollo y permite cargar en el ESP32 la aplicación correspondiente. Se mantiene la organización por capas utilizada en las prácticas anteriores, separando el acceso al hardware, los sensores, las comunicaciones y el control de la aplicación.
-
-## Acceso rápido a las demostraciones
-
-| **Demostración** | **Apartado** | **Qué se muestra** |
-| --- | --- | --- |
-| Control del envío | [start / stop](#control) | Comandos TCP, cambios de estado y mensajes por UART. |
-| Telemetría IMU | [BNO055 y app Python](#imu) | Gráfica común XYZ, orientación y movimiento de la placa 3D. |
-| Servidor web | [Reloj y botones](#web) | Consulta de hora, Reset y puesta en hora mediante NTP. |
-| Archivos JSON | [Transferencia FTP](#ftp) | JSON generado en el ESP32 y archivo recibido en el PC. |
-| Adafruit IO | [HTTP y MQTT](#mqtt) | Publicación en el feed y recepción de valores desde el navegador. |
-
-Los resúmenes y los espacios de demostración quedan visibles. Los desplegables reúnen la explicación técnica, los pasos de uso y los fragmentos de código.
-
 
 ## Organización y arquitectura
 
@@ -51,40 +38,9 @@ Los resúmenes y los espacios de demostración quedan visibles. Los desplegables
        alt="Estructura de archivos del proyecto">
 </picture>
 
-<details>
-<summary><strong>Plantilla para insertar el esquema claro / oscuro</strong></summary>
+<p>&nbsp;</p>
 
-Guarda ambas versiones en el repositorio y sustituye las rutas del siguiente bloque. Para mostrar la imagen, pega el bloque HTML fuera de las comillas de código y reemplaza este marcador.
-
-```html
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/img/arquitectura-oscuro.png">
-    <source media="(prefers-color-scheme: light)" srcset="docs/img/arquitectura-claro.png">
-    <img src="docs/img/arquitectura-claro.png" alt="Arquitectura por capas del firmware ESP32" width="900">
-  </picture>
-</p>
-```
-
-El bloque selecciona la imagen según el modo claro u oscuro. La imagen de `img` actúa como alternativa por defecto.
-
-</details>
-
-Las carpetas de firmware utilizan la siguiente separación de responsabilidades:
-
-| **Módulo** | **Responsabilidad** |
-| --- | --- |
-| `src/main.cpp` | Inicialización y llamadas de la aplicación desde `setup()` y `loop()`. |
-| `hal/wifi` | Escaneo, conexión Wi-Fi, consulta de IP y apertura del cliente TCP en los proyectos que lo utilizan. |
-| `hal/uart` | Inicialización del monitor serie y lectura/escritura de mensajes. |
-| `sensors/BNO055` | Inicialización y lectura de la IMU por I²C. |
-| `sensors/temp` | Generación de temperaturas simuladas y serialización JSON. |
-| `network` | Servicios de ping, NTP, HTTP, FTP y MQTT, según el proyecto. |
-| `protocol/coms` | Preparación, envío y recepción de mensajes TCP. |
-| `app/mef` | Máquina de estados del control de hora o de la página web, según el apartado. |
-| `include` | Cabeceras, declaraciones de funciones y configuración. |
-
-Cada aplicación se describe a partir de las funciones que ejecuta su propio `main.cpp`. Los módulos auxiliares se reutilizan entre carpetas a lo largo del desarrollo.
+El software se ha dividido utilizando la siguiente arquitectura y reparto de responsabilidades, de tal forma que, si se cambia de microcontrolador el diseño de pueda extrapolar de un hardware al otro.
 
 ## Material y entorno de desarrollo
 
@@ -293,7 +249,7 @@ El chat funciona dentro de la red local. Para iniciar otra sesión tras el cierr
 
 <a name="hora-tcp"></a>
 
-## ⏱ 04. Envío periódico de hora por TCP
+## 04. Envío periódico de hora por TCP
 
 **Fecha y hora local · intervalo de 1 s · temporización con millis()**
 
