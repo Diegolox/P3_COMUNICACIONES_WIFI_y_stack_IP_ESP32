@@ -42,7 +42,14 @@ Los resúmenes y los espacios de demostración quedan visibles. Los desplegables
 
 ### Esquema de la arquitectura
 
-> 🖼️ **AÑADIR ESQUEMA:** arquitectura por capas y responsabilidades, con una versión para modo claro y otra para modo oscuro.
+<picture>
+  <source media="(prefers-color-scheme: dark)"
+          srcset="doc/img/ARQUITECTURA_MODO_OSCURO.svg">
+  <source media="(prefers-color-scheme: light)"
+          srcset="doc/img/ARQUITECTURA_MODO_CLARO.svg">
+  <img src="doc/img/ESQUEMA_CLARO.svg"
+       alt="Estructura de archivos del proyecto">
+</picture>
 
 <details>
 <summary><strong>Plantilla para insertar el esquema claro / oscuro</strong></summary>
