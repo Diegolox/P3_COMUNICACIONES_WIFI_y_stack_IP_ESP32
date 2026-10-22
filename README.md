@@ -35,7 +35,8 @@ El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpet
   <source media="(prefers-color-scheme: light)"
           srcset="doc/img/ARQUITECTURA_MODO_CLARO.svg">
   <img src="doc/img/ESQUEMA_CLARO.svg"
-       alt="Estructura de archivos del proyecto">
+       alt="Estructura de archivos del proyecto"
+       width="700">
 </picture>
 
 <p>&nbsp;</p>
