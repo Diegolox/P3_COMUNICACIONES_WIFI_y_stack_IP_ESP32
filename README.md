@@ -36,7 +36,9 @@ El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpet
        alt="Estructura de archivos del proyecto">
 </picture>
 
-El software se ha dividido utilizando la siguiente arquitectura y reparto de responsabilidades, de tal forma que, si se cambia de microcontrolador el diseño de pueda extrapolar de un hardware al otro.
+
+
+  El software se ha dividido utilizando la siguiente arquitectura y reparto de responsabilidades, de tal forma que, si se cambia de microcontrolador el diseño de pueda extrapolar de un hardware al otro.
 
 ## Material y entorno de desarrollo
 
