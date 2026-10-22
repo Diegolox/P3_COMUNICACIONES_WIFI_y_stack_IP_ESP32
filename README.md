@@ -51,25 +51,6 @@ Los resúmenes y los espacios de demostración quedan visibles. Los desplegables
        alt="Estructura de archivos del proyecto">
 </picture>
 
-<details>
-<summary><strong>Plantilla para insertar el esquema claro / oscuro</strong></summary>
-
-Guarda ambas versiones en el repositorio y sustituye las rutas del siguiente bloque. Para mostrar la imagen, pega el bloque HTML fuera de las comillas de código y reemplaza este marcador.
-
-```html
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="docs/img/arquitectura-oscuro.png">
-    <source media="(prefers-color-scheme: light)" srcset="docs/img/arquitectura-claro.png">
-    <img src="docs/img/arquitectura-claro.png" alt="Arquitectura por capas del firmware ESP32" width="900">
-  </picture>
-</p>
-```
-
-El bloque selecciona la imagen según el modo claro u oscuro. La imagen de `img` actúa como alternativa por defecto.
-
-</details>
-
 Las carpetas de firmware utilizan la siguiente separación de responsabilidades:
 
 | **Módulo** | **Responsabilidad** |
