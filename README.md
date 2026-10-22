@@ -8,19 +8,6 @@ En esta práctica se trabaja con un ESP32 conectado a una red Wi-Fi y se desarro
 
 El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpeta conserva una etapa del desarrollo y permite cargar en el ESP32 la aplicación correspondiente. Se mantiene la organización por capas utilizada en las prácticas anteriores, separando el acceso al hardware, los sensores, las comunicaciones y el control de la aplicación.
 
-## Acceso rápido a las demostraciones
-
-| **Demostración** | **Apartado** | **Qué se muestra** |
-| --- | --- | --- |
-| Control del envío | [start / stop](#control) | Comandos TCP, cambios de estado y mensajes por UART. |
-| Telemetría IMU | [BNO055 y app Python](#imu) | Gráfica común XYZ, orientación y movimiento de la placa 3D. |
-| Servidor web | [Reloj y botones](#web) | Consulta de hora, Reset y puesta en hora mediante NTP. |
-| Archivos JSON | [Transferencia FTP](#ftp) | JSON generado en el ESP32 y archivo recibido en el PC. |
-| Adafruit IO | [HTTP y MQTT](#mqtt) | Publicación en el feed y recepción de valores desde el navegador. |
-
-Los resúmenes y los espacios de demostración quedan visibles. Los desplegables reúnen la explicación técnica, los pasos de uso y los fragmentos de código.
-
-
 ## Organización y arquitectura
 
 | **Carpeta** | **Aplicación** |
