@@ -36,21 +36,7 @@ El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpet
        alt="Estructura de archivos del proyecto">
 </picture>
 
-Las carpetas de firmware utilizan la siguiente separación de responsabilidades:
-
-| **Módulo** | **Responsabilidad** |
-| --- | --- |
-| `src/main.cpp` | Inicialización y llamadas de la aplicación desde `setup()` y `loop()`. |
-| `hal/wifi` | Escaneo, conexión Wi-Fi, consulta de IP y apertura del cliente TCP en los proyectos que lo utilizan. |
-| `hal/uart` | Inicialización del monitor serie y lectura/escritura de mensajes. |
-| `sensors/BNO055` | Inicialización y lectura de la IMU por I²C. |
-| `sensors/temp` | Generación de temperaturas simuladas y serialización JSON. |
-| `network` | Servicios de ping, NTP, HTTP, FTP y MQTT, según el proyecto. |
-| `protocol/coms` | Preparación, envío y recepción de mensajes TCP. |
-| `app/mef` | Máquina de estados del control de hora o de la página web, según el apartado. |
-| `include` | Cabeceras, declaraciones de funciones y configuración. |
-
-Cada aplicación se describe a partir de las funciones que ejecuta su propio `main.cpp`. Los módulos auxiliares se reutilizan entre carpetas a lo largo del desarrollo.
+El software se ha dividido utilizando la siguiente arquitectura y reparto de responsabilidades, de tal forma que, si se cambia de microcontrolador el diseño de pueda extrapolar de un hardware al otro.
 
 ## Material y entorno de desarrollo
 
