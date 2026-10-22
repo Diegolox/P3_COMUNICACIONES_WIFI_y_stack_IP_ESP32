@@ -245,7 +245,7 @@ El chat funciona dentro de la red local. Para iniciar otra sesión tras el cierr
 
 <a name="hora-tcp"></a>
 
-## ⏱ 04. Envío periódico de hora por TCP
+## 04. Envío periódico de hora por TCP
 
 **Fecha y hora local · intervalo de 1 s · temporización con millis()**
 
