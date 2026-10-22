@@ -28,7 +28,7 @@ El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpet
 | [chat_wifi](chat_wifi/) | Versión alternativa del chat TCP para un portátil Windows. |
 
 ### Esquema de la arquitectura
-
+<p align="center">
 <picture>
   <source media="(prefers-color-scheme: dark)"
           srcset="doc/img/ARQUITECTURA_MODO_OSCURO.svg">
