@@ -4,8 +4,6 @@
 
 <p align="center"><strong>ESP32 · Wi-Fi · TCP/IP · NTP · HTTP · SenML · FTP · MQTT</strong></p>
 
-## Presentación
-
 En esta práctica se trabaja con un ESP32 conectado a una red Wi-Fi y se desarrollan distintas aplicaciones sobre el stack IP: comprobación de conectividad mediante ping, sincronización de hora con NTP, comunicación bidireccional mediante sockets TCP, transmisión de datos de una IMU, servidor web, generación de datos JSON con campos SenML, transferencia de archivos mediante FTP y comunicación MQTT con Adafruit IO.
 
 El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpeta conserva una etapa del desarrollo y permite cargar en el ESP32 la aplicación correspondiente. Se mantiene la organización por capas utilizada en las prácticas anteriores, separando el acceso al hardware, los sensores, las comunicaciones y el control de la aplicación.
