@@ -34,10 +34,11 @@ El trabajo está dividido en proyectos independientes de PlatformIO. Cada carpet
           srcset="doc/img/ARQUITECTURA_MODO_OSCURO.svg">
   <source media="(prefers-color-scheme: light)"
           srcset="doc/img/ARQUITECTURA_MODO_CLARO.svg">
-  <img src="doc/img/ESQUEMA_CLARO.svg"
+  <img src="doc/img/ARQUITECTURA_MODO_CLARO.svg"
        alt="Estructura de archivos del proyecto"
        width="700">
 </picture>
+</p>
 
 <p>&nbsp;</p>
 
@@ -75,9 +76,11 @@ Código: [P3_01_IDENTIFICAR_IP](P3_01_IDENTIFICAR_IP/).
 
 El ESP32 funciona como **estación Wi-Fi (STA)**: se conecta a un punto de acceso existente, que puede ser un router o la red compartida por el portátil. El módulo `hal/wifi` concentra esta configuración.
 
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura del escaneo Wi-Fi, la IP asignada y el ping a Google.
-
-> 🎬 **AÑADIR VÍDEO:** Vídeo opcional de la conexión y el resultado del ping.
+<p align="center">
+  <a href="doc/img/1_ESCANEO_WIFI.png">
+    <img src="doc/img/1_ESCANEO_WIFI.png" alt="Redes Wi-Fi detectadas por el ESP32: SSID, RSSI, canal y seguridad" width="400">
+  </a>
+</p>
 
 <details>
 <summary><strong>Escaneo, conexión, direcciones IP y código del ping</strong></summary>
@@ -154,7 +157,11 @@ Código: [P3_02_CONEXION_SERVER_NTP](P3_02_CONEXION_SERVER_NTP/).
 
 Una vez conectado a la red, el ESP32 obtiene la hora de `pool.ntp.org`. NTP permite sincronizar el reloj del dispositivo con una referencia de tiempo de la red. La configuración utiliza la zona horaria de Madrid, con cambio automático entre CET y CEST:
 
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de la fecha y hora sincronizadas por NTP.
+<p align="center">
+  <a href="doc/img/2_SERVIDOR_NTP.png">
+    <img src="doc/img/2_SERVIDOR_NTP.png" alt="Monitor serie: conexión Wi-Fi, consulta NTP y fecha y hora de Madrid" width="400">
+  </a>
+</p>
 
 <details>
 <summary><strong>Configuración NTP, lectura del reloj y ejemplo de salida</strong></summary>
@@ -198,10 +205,6 @@ Fecha y hora de Madrid: 30/09/2026 21:53:26
 Código: [P3_03_COMUNICACION_ENTRE_SOCKETS](P3_03_COMUNICACION_ENTRE_SOCKETS/).
 
 El portátil genera el punto de acceso Wi-Fi y ejecuta el servidor TCP. El ESP32 se conecta como estación a esa red y actúa como cliente TCP. La comunicación permite escribir mensajes en el terminal del PC y en el monitor serie del ESP32.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de los dos terminales intercambiando mensajes.
-
-> 🎬 **AÑADIR VÍDEO:** Vídeo del chat bidireccional ESP32 ↔ PC.
 
 <details>
 <summary><strong>Sockets, envío/recepción y pasos para iniciar el chat</strong></summary>
@@ -258,8 +261,6 @@ Código: [P3_04_ENVIO_HORA_PERIODICA](P3_04_ENVIO_HORA_PERIODICA/).
 
 Esta etapa utiliza la conexión TCP para transmitir la fecha y hora local del ESP32 al ordenador. La inicialización abre el socket y ejecuta la rutina de hora inicial del módulo de comunicaciones. El bucle principal llama repetidamente a `enviarHoraPeriodicamente()`.
 
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura del PC recibiendo la hora cada segundo.
-
 <details>
 <summary><strong>Temporización, formato de mensaje y envío al servidor</strong></summary>
 
@@ -292,10 +293,6 @@ La temporización del envío se realiza leyendo el reloj local del ESP32; enviar
 Código: [P3_05_ORDENAR_ENVIO_HORA_PERIODICA](P3_05_ORDENAR_ENVIO_HORA_PERIODICA/).
 
 Se añade una máquina de estados finitos que controla cuándo se transmite la hora. La comunicación queda separada de la interpretación de los comandos: `protocol/coms` entrega líneas completas y `app/mef` decide qué hacer con ellas.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de los comandos start/stop y de los mensajes de estado.
-
-> 🎬 **AÑADIR VÍDEO:** Vídeo: start → recepción de hora → stop, con el monitor serie visible.
 
 <details>
 <summary><strong>Estados, comandos y funcionamiento del control</strong></summary>
@@ -343,13 +340,11 @@ Código: [P3_06_ORDENAR_ENVIO_IMU](P3_06_ORDENAR_ENVIO_IMU/).
 
 El ESP32 lee el BNO055 por I²C y transmite las muestras al ordenador mediante TCP sobre Wi-Fi. El firmware configura SDA en el GPIO `21`, SCL en el GPIO `22` y la dirección I²C del sensor en `0x29`.
 
-> 📷 **AÑADIR FOTO / CAPTURA:** Foto del montaje ESP32 + BNO055 y sus conexiones.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de la app: gráfica XYZ, valores numéricos y vista 3D.
-
-> 🎬 **AÑADIR VÍDEO:** Vídeo de la app recibiendo las medidas mientras se mueve la IMU.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura opcional del terminal de la app o del CSV guardado.
+<p align="center">
+  <a href="doc/img/6_FOTO_DE_IMU_STUDIO.png">
+    <img src="doc/img/6_FOTO_DE_IMU_STUDIO.png" alt="Interfaz de IMU Studio con vista 3D y gráfica de aceleración, esperando la conexión del ESP32" width="400">
+  </a>
+</p>
 
 <details>
 <summary><strong>I²C, lectura del BNO055, trama TCP y aplicación Python</strong></summary>
@@ -440,9 +435,11 @@ Código: [P3_07_WEB_HORA](P3_07_WEB_HORA/).
 
 En este apartado el ESP32 actúa como **servidor HTTP** en el puerto `80`. Un móvil u ordenador de la misma red puede abrir la página introduciendo `http://IP_DEL_ESP32/`. La dirección aparece en el monitor serie al iniciar el servidor.
 
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de la página web en ordenador o móvil.
-
-> 🎬 **AÑADIR VÍDEO:** Vídeo: Poner en hora → reloj actualizado → Reset → 00:00:00.
+<p align="center">
+  <a href="doc/img/7_SERVER_HORA.png">
+    <img src="doc/img/7_SERVER_HORA.png" alt="Página web del ESP32 con reloj y botones Reset y Poner en hora" width="400">
+  </a>
+</p>
 
 <details>
 <summary><strong>Rutas HTTP, JavaScript, máquina de estados y HTML</strong></summary>
@@ -645,8 +642,6 @@ Código: [P3_08_GENERAR_JSON](P3_08_GENERAR_JSON/).
 
 Se desarrolla el módulo `sensors/temp` para producir temperaturas simuladas y representarlas mediante JSON. Se utilizan los campos SenML `n`, `u` y `v`, que permiten indicar de forma compacta el nombre de la medida, su unidad y su valor numérico.
 
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de los JSON generados en el monitor serie.
-
 <details>
 <summary><strong>Generación de temperatura, campos y serialización JSON</strong></summary>
 
@@ -694,12 +689,6 @@ En este proyecto, `loop()` imprime un nuevo JSON por el monitor serie e introduc
 Código: [P3_09_SERVER_FTP](P3_09_SERVER_FTP/).
 
 El ESP32 actúa como **cliente FTP** y envía los registros de temperatura a **FileZilla Server**, instalado en el portátil. El módulo `network/FTP` utiliza la biblioteca `ESP32_FTPClient` y concentra la conexión, la creación del archivo y la transmisión del contenido.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de FileZilla Server y de la carpeta con los archivos recibidos.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura del mismo JSON en el monitor serie y abierto en el PC.
-
-> 🎬 **AÑADIR VÍDEO:** Vídeo de la creación y recepción de archivos JSON por FTP.
 
 <details>
 <summary><strong>Nombres de archivo, transferencia y configuración de FileZilla</strong></summary>
@@ -760,15 +749,11 @@ Código: [P3_10_MQTT](P3_10_MQTT/).
 
 Adafruit IO permite almacenar y consultar medidas mediante feeds. Cada feed tiene una clave que se utiliza tanto en su API HTTP como en los topics MQTT. La autenticación se realiza con el nombre de usuario y una AIO Key configurados localmente.
 
-> 🖼️ **AÑADIR ESQUEMA:** Esquema de comunicación: ESP32, broker Adafruit IO y navegador.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de la petición HTTP POST y su resultado, con la AIO Key oculta.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura del feed de Adafruit IO con los valores enviados por el ESP32.
-
-> 📷 **AÑADIR FOTO / CAPTURA:** Captura de un valor añadido desde el navegador y recibido por UART.
-
-> 🎬 **AÑADIR VÍDEO:** Vídeo de la comunicación en ambos sentidos: ESP32 → feed y navegador → ESP32.
+<p align="center">
+  <a href="doc/img/10_SERVER_MQTT.png">
+    <img src="doc/img/10_SERVER_MQTT.png" alt="Feed Temperatura de Adafruit IO con gráfica e historial de valores" width="400">
+  </a>
+</p>
 
 <details>
 <summary><strong>API HTTP, broker, topics, funciones MQTT y recepción desde el navegador</strong></summary>
