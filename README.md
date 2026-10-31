@@ -78,7 +78,7 @@ El ESP32 funciona como **estación Wi-Fi (STA)**: se conecta a un punto de acces
 
 <p align="center">
   <a href="doc/img/1_ESCANEO_WIFI.png">
-    <img src="doc/img/1_ESCANEO_WIFI.png" alt="Redes Wi-Fi detectadas por el ESP32: SSID, RSSI, canal y seguridad" width="400">
+    <img src="doc/img/1_ESCANEO_WIFI.png" alt="Redes Wi-Fi detectadas por el ESP32: SSID, RSSI, canal y seguridad" width="550">
   </a>
 </p>
 
@@ -159,7 +159,7 @@ Una vez conectado a la red, el ESP32 obtiene la hora de `pool.ntp.org`. NTP perm
 
 <p align="center">
   <a href="doc/img/2_SERVIDOR_NTP.png">
-    <img src="doc/img/2_SERVIDOR_NTP.png" alt="Monitor serie: conexión Wi-Fi, consulta NTP y fecha y hora de Madrid" width="400">
+    <img src="doc/img/2_SERVIDOR_NTP.png" alt="Monitor serie: conexión Wi-Fi, consulta NTP y fecha y hora de Madrid" width="550">
   </a>
 </p>
 
@@ -342,7 +342,7 @@ El ESP32 lee el BNO055 por I²C y transmite las muestras al ordenador mediante T
 
 <p align="center">
   <a href="doc/img/6_FOTO_DE_IMU_STUDIO.png">
-    <img src="doc/img/6_FOTO_DE_IMU_STUDIO.png" alt="Interfaz de IMU Studio con vista 3D y gráfica de aceleración, esperando la conexión del ESP32" width="400">
+    <img src="doc/img/6_FOTO_DE_IMU_STUDIO.png" alt="Interfaz de IMU Studio con vista 3D y gráfica de aceleración, esperando la conexión del ESP32" width="750">
   </a>
 </p>
 
@@ -437,7 +437,7 @@ En este apartado el ESP32 actúa como **servidor HTTP** en el puerto `80`. Un m�
 
 <p align="center">
   <a href="doc/img/7_SERVER_HORA.png">
-    <img src="doc/img/7_SERVER_HORA.png" alt="Página web del ESP32 con reloj y botones Reset y Poner en hora" width="400">
+    <img src="doc/img/7_SERVER_HORA.png" alt="Página web del ESP32 con reloj y botones Reset y Poner en hora" width="450">
   </a>
 </p>
 
@@ -751,7 +751,7 @@ Adafruit IO permite almacenar y consultar medidas mediante feeds. Cada feed tien
 
 <p align="center">
   <a href="doc/img/10_SERVER_MQTT.png">
-    <img src="doc/img/10_SERVER_MQTT.png" alt="Feed Temperatura de Adafruit IO con gráfica e historial de valores" width="400">
+    <img src="doc/img/10_SERVER_MQTT.png" alt="Feed Temperatura de Adafruit IO con gráfica e historial de valores" width="650">
   </a>
 </p>
 
